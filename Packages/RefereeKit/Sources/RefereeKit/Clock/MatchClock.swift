@@ -122,7 +122,9 @@ public struct MatchClock: Codable, Sendable, Equatable {
             before += max(0, min(e, end) - min(s, end))
             during += max(0, max(e, end) - max(s, end))
         }
-        return (before, during)
+        // Round to whole milliseconds so floating point error in the absolute
+        // clock values cannot push an exact 60 s across a minute boundary.
+        return (Self.wholeMillis(before), Self.wholeMillis(during))
     }
 
     /// `ceil(beforeNormalEnd / 60)`: 0 stays 0, 1 to 60 seconds is 1, 120 seconds is 2.
@@ -134,7 +136,9 @@ public struct MatchClock: Codable, Sendable, Equatable {
     /// True in a playing period from the first (largest) warning offset before normal end onward.
     public func showsAddedTimeSuggestion(at: Anchor, config: MatchConfig) -> Bool {
         guard period.isPlaying else { return false }
-        let lead = config.warningOffsets.max() ?? 0
+        // Same filter as AlertPlan: a warning that cannot fire in this period does not count.
+        let length = period.length(config)
+        let lead = config.warningOffsets.filter { $0 > 0 && $0 < length }.max() ?? 0
         return elapsed(at: at, config: config) >= period.normalEnd(config) - lead
     }
 
@@ -204,6 +208,10 @@ public struct MatchClock: Codable, Sendable, Equatable {
 
     private var current: PeriodRecord? {
         currentIndex.map { records[$0] }
+    }
+
+    private static func wholeMillis(_ seconds: TimeInterval) -> TimeInterval {
+        (seconds * 1000).rounded() / 1000
     }
 
     private func clockValue(of anchor: Anchor, in record: PeriodRecord, config: MatchConfig) -> TimeInterval {

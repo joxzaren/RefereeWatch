@@ -16,9 +16,13 @@ public struct Anchor: Codable, Sendable, Hashable {
         self.wall = wall
     }
 
+    /// Boot session id used when `kern.bootsessionuuid` cannot be read. Anchors
+    /// carrying it never compare monotonic values, since a reboot cannot be detected.
+    public static let unknownBootSession = "unknown"
+
     /// Seconds from `earlier` to `self`. Negative when `earlier` is in fact later.
     public func seconds(since earlier: Anchor) -> TimeInterval {
-        guard bootSessionID == earlier.bootSessionID else {
+        guard bootSessionID == earlier.bootSessionID, bootSessionID != Self.unknownBootSession else {
             return wall.timeIntervalSince(earlier.wall)
         }
         if monotonicNanos >= earlier.monotonicNanos {
@@ -65,11 +69,11 @@ public struct SystemTimeSource: TimeSource {
     private static func readBootSessionID() -> String {
         var size = 0
         guard sysctlbyname("kern.bootsessionuuid", nil, &size, nil, 0) == 0, size > 0 else {
-            return "unknown"
+            return Anchor.unknownBootSession
         }
         var buffer = [CChar](repeating: 0, count: size)
         guard sysctlbyname("kern.bootsessionuuid", &buffer, &size, nil, 0) == 0 else {
-            return "unknown"
+            return Anchor.unknownBootSession
         }
         let bytes = buffer.prefix { $0 != 0 }.map { UInt8(bitPattern: $0) }
         return String(decoding: bytes, as: UTF8.self)

@@ -47,12 +47,13 @@ public struct Match: Codable, Sendable, Identifiable, Equatable {
 
     // MARK: Reading
 
-    /// Live events ordered by period, then minute, then version time.
+    /// Live events ordered by period, then minute, then creation time, which edits
+    /// never change, so editing an event does not move it.
     public var liveEvents: [MatchEvent] {
         events.filter(\.isLive).sorted { a, b in
             if a.period != b.period { return a.period.eventSortIndex < b.period.eventSortIndex }
             if a.minute != b.minute { return a.minute < b.minute }
-            if a.version.modifiedAt != b.version.modifiedAt { return a.version.modifiedAt < b.version.modifiedAt }
+            if a.createdAt != b.createdAt { return a.createdAt < b.createdAt }
             return a.id.uuidString < b.id.uuidString
         }
     }
