@@ -34,5 +34,7 @@
 	</array>
 	<key>WKCompanionAppBundleIdentifier</key>
 	<string>com.refereewatch.app</string>
+	<key>WKRunsIndependentlyOfCompanionApp</key>
+	<true/>
 </dict>
 </plist>
