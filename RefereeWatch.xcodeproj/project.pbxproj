@@ -1,0 +1,574 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1FA16F8AE6BB2901F70B3C51 /* RefereeKit in Frameworks */ = {isa = PBXBuildFile; productRef = FB220FE3323F953D2621A28B /* RefereeKit */; };
+		31926CEE6057F26DE62E5EBD /* RefereeWatchWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 00EA58F9F422660FAA24C5A6 /* RefereeWatchWatch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		48F32E32D6ACDAF4780E2E74 /* RefereeWatchWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D9E8030886E5E4BCFA06A5 /* RefereeWatchWatchApp.swift */; };
+		64DB88006348894F5AFDF419 /* RefereeKit in Frameworks */ = {isa = PBXBuildFile; productRef = A38C7F3BC78AB3C89470BD91 /* RefereeKit */; };
+		8110BF3DA111DAA0F1368E78 /* ReportRenderingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34581BA9533037B96A8029F4 /* ReportRenderingTests.swift */; };
+		9172C9AD3BEECA16C07B9BC4 /* RefereeWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6209F8E94B7232D884AA9A /* RefereeWatchApp.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0D8ECC513B98F1BADB642AD1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 864D68A0B55B5C09330D40F7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F391AC0ADDE930CB1C595B17;
+			remoteInfo = RefereeWatchWatch;
+		};
+		AE33D5C5C72507E80C79200A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 864D68A0B55B5C09330D40F7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2B206B5854E8877119AFC532;
+			remoteInfo = RefereeWatch;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A64BA262CD3B78059609BEFB /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				31926CEE6057F26DE62E5EBD /* RefereeWatchWatch.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		00EA58F9F422660FAA24C5A6 /* RefereeWatchWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RefereeWatchWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3434132FCF0F8329D44D4F54 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		34581BA9533037B96A8029F4 /* ReportRenderingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportRenderingTests.swift; sourceTree = "<group>"; };
+		39A28D8CE13572B386968B19 /* RefereeWatchTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = RefereeWatchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A6209F8E94B7232D884AA9A /* RefereeWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefereeWatchApp.swift; sourceTree = "<group>"; };
+		D68932E7E1A7161D61BDCA63 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		D7CAE49DBB5C1EA8F10CAEF1 /* RefereeWatch.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = RefereeWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E2AA281823B06EFDD49509AD /* RefereeKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = RefereeKit; path = Packages/RefereeKit; sourceTree = SOURCE_ROOT; };
+		F4D9E8030886E5E4BCFA06A5 /* RefereeWatchWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefereeWatchWatchApp.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		75742CC3A37A2C452490F7DB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				64DB88006348894F5AFDF419 /* RefereeKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7C395ADD1694B780F1C2F063 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1FA16F8AE6BB2901F70B3C51 /* RefereeKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0194C9E088C232FEF333A27F /* Watch */ = {
+			isa = PBXGroup;
+			children = (
+				3434132FCF0F8329D44D4F54 /* Info.plist */,
+				F4D9E8030886E5E4BCFA06A5 /* RefereeWatchWatchApp.swift */,
+			);
+			path = Watch;
+			sourceTree = "<group>";
+		};
+		6BBE04CB04065133E0514009 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				E2AA281823B06EFDD49509AD /* RefereeKit */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
+		8EBA19A922A093F7426C7ED4 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				D68932E7E1A7161D61BDCA63 /* Info.plist */,
+				8A6209F8E94B7232D884AA9A /* RefereeWatchApp.swift */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		9556B54A8619106F5CAC4766 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D7CAE49DBB5C1EA8F10CAEF1 /* RefereeWatch.app */,
+				39A28D8CE13572B386968B19 /* RefereeWatchTests.xctest */,
+				00EA58F9F422660FAA24C5A6 /* RefereeWatchWatch.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9D89CA7832B6C44D474D0D8C = {
+			isa = PBXGroup;
+			children = (
+				8EBA19A922A093F7426C7ED4 /* iOS */,
+				E776593F99E57F5343F51207 /* iOSTests */,
+				6BBE04CB04065133E0514009 /* Packages */,
+				0194C9E088C232FEF333A27F /* Watch */,
+				9556B54A8619106F5CAC4766 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E776593F99E57F5343F51207 /* iOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				34581BA9533037B96A8029F4 /* ReportRenderingTests.swift */,
+			);
+			path = iOSTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2B206B5854E8877119AFC532 /* RefereeWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 72718218046079653310FB25 /* Build configuration list for PBXNativeTarget "RefereeWatch" */;
+			buildPhases = (
+				4CD50EB18D18D67E30048BB7 /* Sources */,
+				7C395ADD1694B780F1C2F063 /* Frameworks */,
+				A64BA262CD3B78059609BEFB /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				62D257430DE28F314FA61748 /* PBXTargetDependency */,
+			);
+			name = RefereeWatch;
+			packageProductDependencies = (
+				FB220FE3323F953D2621A28B /* RefereeKit */,
+			);
+			productName = RefereeWatch;
+			productReference = D7CAE49DBB5C1EA8F10CAEF1 /* RefereeWatch.app */;
+			productType = "com.apple.product-type.application";
+		};
+		6250AAE605BD2716826413A7 /* RefereeWatchTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 498FF0F750C50EA1E4A0EF51 /* Build configuration list for PBXNativeTarget "RefereeWatchTests" */;
+			buildPhases = (
+				0D81A9B70E3CEFDD5DE24D45 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E62F31B1F3EAC7662CE9714B /* PBXTargetDependency */,
+			);
+			name = RefereeWatchTests;
+			packageProductDependencies = (
+			);
+			productName = RefereeWatchTests;
+			productReference = 39A28D8CE13572B386968B19 /* RefereeWatchTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		F391AC0ADDE930CB1C595B17 /* RefereeWatchWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6A3066DCAAC479D034A94EE5 /* Build configuration list for PBXNativeTarget "RefereeWatchWatch" */;
+			buildPhases = (
+				7780418443A02F490E6ED974 /* Sources */,
+				75742CC3A37A2C452490F7DB /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RefereeWatchWatch;
+			packageProductDependencies = (
+				A38C7F3BC78AB3C89470BD91 /* RefereeKit */,
+			);
+			productName = RefereeWatchWatch;
+			productReference = 00EA58F9F422660FAA24C5A6 /* RefereeWatchWatch.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		864D68A0B55B5C09330D40F7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					2B206B5854E8877119AFC532 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+					6250AAE605BD2716826413A7 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+					F391AC0ADDE930CB1C595B17 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 7706CB987D417A343D32B9B3 /* Build configuration list for PBXProject "RefereeWatch" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 9D89CA7832B6C44D474D0D8C;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				1BD47D517ACBECDC8F18BF86 /* XCLocalSwiftPackageReference "Packages/RefereeKit" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 9556B54A8619106F5CAC4766 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2B206B5854E8877119AFC532 /* RefereeWatch */,
+				F391AC0ADDE930CB1C595B17 /* RefereeWatchWatch */,
+				6250AAE605BD2716826413A7 /* RefereeWatchTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0D81A9B70E3CEFDD5DE24D45 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8110BF3DA111DAA0F1368E78 /* ReportRenderingTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4CD50EB18D18D67E30048BB7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9172C9AD3BEECA16C07B9BC4 /* RefereeWatchApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7780418443A02F490E6ED974 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				48F32E32D6ACDAF4780E2E74 /* RefereeWatchWatchApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		62D257430DE28F314FA61748 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F391AC0ADDE930CB1C595B17 /* RefereeWatchWatch */;
+			targetProxy = 0D8ECC513B98F1BADB642AD1 /* PBXContainerItemProxy */;
+		};
+		E62F31B1F3EAC7662CE9714B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2B206B5854E8877119AFC532 /* RefereeWatch */;
+			targetProxy = AE33D5C5C72507E80C79200A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		175BE424FE0676B7B1480740 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.refereewatch.app.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RefereeWatch.app/RefereeWatch";
+			};
+			name = Release;
+		};
+		1E4504370B1B3A3061F4018E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Shared/Watch.entitlements;
+				INFOPLIST_FILE = Watch/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = com.refereewatch.app.watchkitapp;
+				PRODUCT_NAME = "RefereeWatch Watch";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+			};
+			name = Release;
+		};
+		490AFEE90E400E7A835E9AE8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Shared/iOS.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = iOS/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = RefereeWatch;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.refereewatch.app;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		5CD7801107C817FE90BBD0E6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.refereewatch.app.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RefereeWatch.app/RefereeWatch";
+			};
+			name = Debug;
+		};
+		6842F3C3381C7577B539AF4D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Shared/iOS.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = iOS/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = RefereeWatch;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.refereewatch.app;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		91943D7BEAD7E0B29C16194E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Shared/Watch.entitlements;
+				INFOPLIST_FILE = Watch/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = com.refereewatch.app.watchkitapp;
+				PRODUCT_NAME = "RefereeWatch Watch";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+			};
+			name = Debug;
+		};
+		CE8791CAAB17944B94DA2554 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
+				SWIFT_VERSION = 6.0;
+				WATCHOS_DEPLOYMENT_TARGET = 27.0;
+			};
+			name = Debug;
+		};
+		FCE8F01F04AD8AED624C7F7E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
+				SWIFT_VERSION = 6.0;
+				WATCHOS_DEPLOYMENT_TARGET = 27.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		498FF0F750C50EA1E4A0EF51 /* Build configuration list for PBXNativeTarget "RefereeWatchTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5CD7801107C817FE90BBD0E6 /* Debug */,
+				175BE424FE0676B7B1480740 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		6A3066DCAAC479D034A94EE5 /* Build configuration list for PBXNativeTarget "RefereeWatchWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				91943D7BEAD7E0B29C16194E /* Debug */,
+				1E4504370B1B3A3061F4018E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		72718218046079653310FB25 /* Build configuration list for PBXNativeTarget "RefereeWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				490AFEE90E400E7A835E9AE8 /* Debug */,
+				6842F3C3381C7577B539AF4D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		7706CB987D417A343D32B9B3 /* Build configuration list for PBXProject "RefereeWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CE8791CAAB17944B94DA2554 /* Debug */,
+				FCE8F01F04AD8AED624C7F7E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		1BD47D517ACBECDC8F18BF86 /* XCLocalSwiftPackageReference "Packages/RefereeKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/RefereeKit;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A38C7F3BC78AB3C89470BD91 /* RefereeKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RefereeKit;
+		};
+		FB220FE3323F953D2621A28B /* RefereeKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RefereeKit;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 864D68A0B55B5C09330D40F7 /* Project object */;
+}
