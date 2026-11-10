@@ -21,6 +21,10 @@ final class WorkoutManager: NSObject {
     /// True while we are ending the session ourselves, so the end is not seen as early.
     @ObservationIgnored private var ending = false
     @ObservationIgnored private var startDate: Date?
+    /// The end of the previous match's session while it runs. `start` waits for it.
+    @ObservationIgnored private var endTask: Task<WorkoutSummary, Never>?
+    /// Location points sent to the route builder since it was obtained.
+    @ObservationIgnored private var routePoints = 0
 
     override init() {
         locationStatus = locationManager.authorizationStatus
@@ -69,8 +73,16 @@ final class WorkoutManager: NSObject {
     // MARK: Session
 
     /// Starts the workout at kick off. Marks the session unhealthy when it cannot start.
+    ///
+    /// When the previous match's session is still ending, this waits for that end to finish
+    /// first, so the new match always ends up with either a running session or the banner.
     func start(at date: Date) async {
-        guard session == nil else { return }
+        if let endTask { _ = await endTask.value }
+        if let session {
+            // Another start won the race. Keep its session; the banner follows its state.
+            if session.state != .running && session.state != .prepared { sessionHealthy = false }
+            return
+        }
         refreshHealthStatus()
         guard healthAvailable, workoutSharing == .sharingAuthorized else {
             sessionHealthy = false
@@ -90,7 +102,7 @@ final class WorkoutManager: NSObject {
             session.startActivity(with: date)
             try await builder.beginCollection(at: date)
             sessionHealthy = true
-            startRoute()
+            startRoute(builder: builder)
         } catch {
             ending = true
             session?.end()
@@ -103,21 +115,36 @@ final class WorkoutManager: NSObject {
 
     /// After a relaunch mid match: picks up a session that is still running, or starts a new one.
     func recoverOrStart(at date: Date) async {
+        if let endTask { _ = await endTask.value }
         guard session == nil else { return }
         if healthAvailable, let recovered = try? await healthStore.recoverActiveWorkoutSession() {
             recovered.delegate = self
+            let builder = recovered.associatedWorkoutBuilder()
             session = recovered
-            builder = recovered.associatedWorkoutBuilder()
+            self.builder = builder
             startDate = recovered.startDate ?? date
             sessionHealthy = recovered.state == .running
-            startRoute()
+            // The workout builder hands back the route builder it already owns, so the route
+            // recorded before the relaunch is kept and finished with the workout.
+            startRoute(builder: builder)
             return
         }
         await start(at: date)
     }
 
     /// Ends the workout at the final whistle and returns what it recorded.
+    ///
+    /// The work runs in a stored task so a `start` for the next match can wait for it.
     func end(at date: Date, fallbackDuration: TimeInterval?) async -> WorkoutSummary {
+        if let endTask { return await endTask.value }
+        let task = Task { await self.performEnd(at: date, fallbackDuration: fallbackDuration) }
+        endTask = task
+        let summary = await task.value
+        endTask = nil
+        return summary
+    }
+
+    private func performEnd(at date: Date, fallbackDuration: TimeInterval?) async -> WorkoutSummary {
         locationManager.stopUpdatingLocation()
         guard let session, let builder else {
             return WorkoutSummary(durationSeconds: fallbackDuration, savedToHealth: false, hasRoute: false)
@@ -125,6 +152,7 @@ final class WorkoutManager: NSObject {
         ending = true
         session.end()
         var summary = WorkoutSummary(durationSeconds: fallbackDuration)
+        let routeRecorded = routeBuilder != nil && routePoints > 0
         do {
             try await builder.endCollection(at: date)
             summary.distanceMeters = builder.statistics(for: HKQuantityType(.distanceWalkingRunning))?
@@ -132,13 +160,11 @@ final class WorkoutManager: NSObject {
             summary.averageHeartRate = builder.statistics(for: HKQuantityType(.heartRate))?
                 .averageQuantity()?.doubleValue(for: HKUnit.count().unitDivided(by: .minute()))
             summary.durationSeconds = builder.elapsedTime
-            if let workout = try await builder.finishWorkout() {
+            if try await builder.finishWorkout() != nil {
                 summary.savedToHealth = true
-                if let routeBuilder, Self.saveRoute(locationAuthorized: locationAuthorized, routeSharing: routeSharing) {
-                    if (try? await routeBuilder.finishRoute(with: workout, metadata: nil)) != nil {
-                        summary.hasRoute = true
-                    }
-                }
+                // A route builder from `seriesBuilder(for:)` is finished and attached to the
+                // workout by `finishWorkout` itself.
+                summary.hasRoute = routeRecorded
             }
         } catch {
             summary.savedToHealth = false
@@ -146,6 +172,7 @@ final class WorkoutManager: NSObject {
         self.session = nil
         self.builder = nil
         routeBuilder = nil
+        routePoints = 0
         ending = false
         sessionHealthy = true
         return summary
@@ -156,23 +183,35 @@ final class WorkoutManager: NSObject {
         locationAuthorized && routeSharing == .sharingAuthorized
     }
 
-    private func startRoute() {
-        guard Self.saveRoute(locationAuthorized: locationAuthorized, routeSharing: routeSharing) else { return }
-        routeBuilder = HKWorkoutRouteBuilder(healthStore: healthStore, device: nil)
+    /// Gets the route builder that belongs to the workout builder. For a recovered session this
+    /// is the one that already holds the route recorded before the relaunch.
+    private func startRoute(builder: HKLiveWorkoutBuilder) {
+        guard Self.saveRoute(locationAuthorized: locationAuthorized, routeSharing: routeSharing),
+              let routeBuilder = builder.seriesBuilder(for: HKSeriesType.workoutRoute()) as? HKWorkoutRouteBuilder
+        else { return }
+        self.routeBuilder = routeBuilder
+        // After recovery the count restarts, but the earlier points are still in the builder.
+        routePoints = 0
         locationManager.startUpdatingLocation()
     }
 
     // MARK: Delegate hops
 
-    fileprivate func sessionChanged(to state: HKWorkoutSessionState) {
-        guard !ending else { return }
+    /// Only the current session counts: a late callback from the previous match's session
+    /// must not mark the new one unhealthy.
+    private func isCurrent(_ id: ObjectIdentifier) -> Bool {
+        session.map { ObjectIdentifier($0) == id } ?? false
+    }
+
+    fileprivate func sessionChanged(_ id: ObjectIdentifier, to state: HKWorkoutSessionState) {
+        guard !ending, isCurrent(id) else { return }
         if state == .ended || state == .stopped {
             sessionHealthy = false
         }
     }
 
-    fileprivate func sessionFailed() {
-        guard !ending else { return }
+    fileprivate func sessionFailed(_ id: ObjectIdentifier) {
+        guard !ending, isCurrent(id) else { return }
         sessionHealthy = false
     }
 
@@ -180,6 +219,7 @@ final class WorkoutManager: NSObject {
         guard let routeBuilder else { return }
         let good = locations.filter { $0.horizontalAccuracy >= 0 && $0.horizontalAccuracy <= 50 }
         guard !good.isEmpty else { return }
+        routePoints += good.count
         Task { try? await routeBuilder.insertRouteData(good) }
     }
 
@@ -195,11 +235,13 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
         from fromState: HKWorkoutSessionState,
         date: Date
     ) {
-        Task { @MainActor in self.sessionChanged(to: toState) }
+        let id = ObjectIdentifier(workoutSession)
+        Task { @MainActor in self.sessionChanged(id, to: toState) }
     }
 
     nonisolated func workoutSession(_ workoutSession: HKWorkoutSession, didFailWithError error: any Error) {
-        Task { @MainActor in self.sessionFailed() }
+        let id = ObjectIdentifier(workoutSession)
+        Task { @MainActor in self.sessionFailed(id) }
     }
 }
 

@@ -13,7 +13,10 @@ final class FakeLink: WatchLink {
 
 @MainActor
 @Suite struct AppModelTests {
-    let directory = FileManager.default.temporaryDirectory.appending(path: "AppModelTests-\(UUID().uuidString)")
+    /// A store folder inside its own test folder, since a received copy is kept beside the store.
+    let directory = FileManager.default.temporaryDirectory
+        .appending(path: "AppModelTests-\(UUID().uuidString)")
+        .appending(path: "Matches", directoryHint: .isDirectory)
     let suiteName = "AppModelTests-\(UUID().uuidString)"
     var defaults: UserDefaults { UserDefaults(suiteName: suiteName)! }
     var store: MatchStore { MatchStore(directory: directory) }
@@ -126,5 +129,35 @@ final class FakeLink: WatchLink {
         #expect(model.match(match.id)?.liveEvents.contains { $0.id == added.id } == false)
         #expect(link.matches.count == 2)
         #expect(!model.deleteEvent(added.id, matchID: match.id))
+    }
+
+    @Test func anUnreadableLocalFileIsNeverOverwritten() throws {
+        let (model, link) = makeModel()
+        let remote = Fixtures.fullMatch()
+        let damaged = Data("{ not a match".utf8)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        try damaged.write(to: store.fileURL(for: remote.id))
+
+        model.receive(remote)
+
+        #expect(try Data(contentsOf: store.fileURL(for: remote.id)) == damaged)
+        let sideURL = AppModel.receivedCopyURL(for: remote.id, store: store)
+        #expect(sideURL.lastPathComponent == "\(remote.id.uuidString).received.json")
+        let kept = try SyncCoding.makeDecoder().decode(Match.self, from: Data(contentsOf: sideURL))
+        #expect(kept == remote.normalized())
+        #expect(link.matches.isEmpty)
+        #expect(model.errorMessage != nil)
+        // The side file is not picked up as a second copy of the match.
+        #expect(try store.loadAll().isEmpty)
+    }
+
+    @Test func aMissingLocalFileIsTreatedAsNoLocalCopy() throws {
+        let (model, _) = makeModel()
+        let remote = Fixtures.fullMatch()
+        model.receive(remote)
+        #expect(try store.load(id: remote.id) == remote.normalized())
+        #expect(!FileManager.default.fileExists(
+            atPath: AppModel.receivedCopyURL(for: remote.id, store: store).path(percentEncoded: false)))
+        #expect(model.errorMessage == nil)
     }
 }

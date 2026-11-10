@@ -40,7 +40,13 @@ final class AlertService {
                 } catch {
                     return
                 }
-                self?.fire(delivery, generation: generation)
+                var playHaptic = true
+                if AlertSchedule.isLate(ContinuousClock.now - deadline) {
+                    // Woken late, for example after suspension: the backup may already have buzzed.
+                    let delivered = await Self.deliveredIDs()
+                    playHaptic = AlertSchedule.shouldPlayLateHaptic(delivery, deliveredIDs: delivered)
+                }
+                self?.fire(delivery, generation: generation, playHaptic: playHaptic)
             })
         }
     }
@@ -53,15 +59,26 @@ final class AlertService {
         center.removeAllPendingNotificationRequests()
     }
 
-    private func fire(_ delivery: AlertDelivery, generation: Int) {
+    private func fire(_ delivery: AlertDelivery, generation: Int, playHaptic: Bool) {
         guard generation == self.generation, !Task.isCancelled else { return }
         center.removePendingNotificationRequests(withIdentifiers: delivery.ids)
         center.removeDeliveredNotifications(withIdentifiers: delivery.ids)
-        // The burst runs in its own task: `onFire` may reschedule, which cancels the
-        // alert task, and the burst must keep its spacing regardless.
-        let pattern = delivery.haptic
-        Task { await Self.play(pattern) }
+        if playHaptic {
+            // The burst runs in its own task: `onFire` may reschedule, which cancels the
+            // alert task, and the burst must keep its spacing regardless.
+            let pattern = delivery.haptic
+            Task { await Self.play(pattern) }
+        }
         onFire(delivery)
+    }
+
+    /// Ids of the notifications already shown, read without passing non-Sendable values across.
+    private static func deliveredIDs() async -> Set<String> {
+        await withCheckedContinuation { continuation in
+            UNUserNotificationCenter.current().getDeliveredNotifications { notifications in
+                continuation.resume(returning: Set(notifications.map(\.request.identifier)))
+            }
+        }
     }
 
     private static func play(_ pattern: HapticPattern) async {
@@ -81,7 +98,9 @@ final class AlertService {
         content.body = delivery.body
         content.sound = .default
         content.interruptionLevel = .timeSensitive
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: max(1, delivery.secondsFromNow), repeats: false)
+        // A little after the in-app deadline, so the in-app alert removes it before it shows.
+        let trigger = UNTimeIntervalNotificationTrigger(
+            timeInterval: AlertSchedule.backupInterval(secondsFromNow: delivery.secondsFromNow), repeats: false)
         let request = UNNotificationRequest(identifier: delivery.primaryID, content: content, trigger: trigger)
         center.add(request) { _ in }
     }

@@ -1,5 +1,6 @@
 import Foundation
 import Observation
+import os
 import RefereeKit
 
 /// Sends messages to the watch. `ConnectivityService` is the real one; tests use a fake.
@@ -30,6 +31,7 @@ final class AppModel {
     @ObservationIgnored private var link: (any WatchLink)?
     @ObservationIgnored private let defaults: UserDefaults
     @ObservationIgnored private let clock: () -> Date
+    @ObservationIgnored private static let log = Logger(subsystem: "com.refereewatch.app", category: "sync")
 
     init(store: MatchStore, defaults: UserDefaults = .standard, now: @escaping () -> Date = { Date() }) {
         self.store = store
@@ -62,8 +64,18 @@ final class AppModel {
 
     /// Merges a match received from the watch, saves it when it changed, and sends the
     /// merged match back only when the watch is missing something.
+    ///
+    /// When the local file exists but cannot be read, it is never overwritten: the merge is
+    /// skipped and the received copy is kept in "<id>.received.json" for recovery.
     func receive(_ remote: Match) {
-        let local = try? store.load(id: remote.id)
+        let local: Match?
+        do {
+            // Nil means there is no local copy, so the remote one is simply saved.
+            local = try store.load(id: remote.id)
+        } catch {
+            keepReceivedCopy(remote, loadError: error)
+            return
+        }
         let result = SyncPayload.mergeReceived(local: local, remote: remote)
         if result.changed {
             do {
@@ -77,6 +89,26 @@ final class AppModel {
         if result.needsSendBack {
             link?.sendMatch(result.merged)
         }
+    }
+
+    /// Where a received copy is kept when the local file for its match cannot be read: beside
+    /// the store's folder, so `loadAll` never picks it up as a second copy of the match.
+    nonisolated static func receivedCopyURL(for id: UUID, store: MatchStore) -> URL {
+        store.directory.deletingLastPathComponent()
+            .appending(path: "\(id.uuidString).received.json", directoryHint: .notDirectory)
+    }
+
+    private func keepReceivedCopy(_ remote: Match, loadError: any Error) {
+        let url = Self.receivedCopyURL(for: remote.id, store: store)
+        let id = remote.id.uuidString
+        do {
+            let data = try SyncCoding.makeEncoder(pretty: true).encode(remote.normalized())
+            try data.write(to: url, options: .atomic)
+            Self.log.error("Match \(id, privacy: .public) could not be read (\(loadError.localizedDescription, privacy: .public)). Kept the received copy at \(url.path(percentEncoded: false), privacy: .public) and skipped the merge.")
+        } catch {
+            Self.log.error("Match \(id, privacy: .public) could not be read, and the received copy could not be kept: \(error.localizedDescription, privacy: .public)")
+        }
+        errorMessage = "A match from the watch could not be merged because the saved copy is damaged. Both copies were kept."
     }
 
     // MARK: Event editing

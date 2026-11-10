@@ -1,16 +1,24 @@
 import Foundation
+import os
 import RefereeKit
 import WatchConnectivity
 
 /// WatchConnectivity on the watch. Delegate callbacks arrive on a background queue, so they
 /// decode the dictionary into a `Sendable` `WireMessage` there and hop to the main actor.
+///
+/// Which matches still need sending is owned by `MatchController`, which persists the ids
+/// and resends them when the session activates.
 @MainActor
 final class ConnectivityService: NSObject {
     /// Receives decoded messages on the main actor.
     var onMessage: (WireMessage) -> Void = { _ in }
+    /// Called on the main actor once the session is active, so pending matches can be resent.
+    var onActivated: () -> Void = {}
+    /// Called on the main actor when a match transfer has been delivered to the iPhone.
+    var onMatchDelivered: (UUID) -> Void = { _ in }
 
-    private var pending: [Match] = []
-    private var activated = false
+    private(set) var activated = false
+    nonisolated private static let log = Logger(subsystem: "com.refereewatch.app.watchkitapp", category: "connectivity")
 
     func activate() {
         guard WCSession.isSupported() else { return }
@@ -20,23 +28,30 @@ final class ConnectivityService: NSObject {
     }
 
     /// Queues the match for the iPhone with `transferUserInfo`, which retries across disconnects.
+    /// Before activation this does nothing; the controller resends pending matches on activation.
     func send(_ match: Match) {
-        guard WCSession.isSupported() else { return }
-        guard activated else {
-            pending.removeAll { $0.id == match.id }
-            pending.append(match)
+        guard WCSession.isSupported(), activated else { return }
+        guard let dictionary = try? WireMessage.match(match).dictionary() else {
+            Self.log.error("Could not encode match \(match.id.uuidString, privacy: .public)")
             return
         }
-        guard let dictionary = try? WireMessage.match(match).dictionary() else { return }
         WCSession.default.transferUserInfo(dictionary)
+    }
+
+    /// Match ids whose transfers the system still has queued, so a resend does not duplicate them.
+    func queuedMatchIDs() -> Set<UUID> {
+        guard WCSession.isSupported(), activated else { return [] }
+        var ids: Set<UUID> = []
+        for transfer in WCSession.default.outstandingUserInfoTransfers where transfer.isTransferring {
+            if case .match(let match) = WireMessage(dictionary: transfer.userInfo) { ids.insert(match.id) }
+        }
+        return ids
     }
 
     fileprivate func didActivate(context: WireMessage?) {
         activated = true
         if let context { onMessage(context) }
-        let queued = pending
-        pending.removeAll()
-        for match in queued { send(match) }
+        onActivated()
     }
 
     fileprivate func received(_ message: WireMessage) {
@@ -64,5 +79,16 @@ extension ConnectivityService: WCSessionDelegate {
     nonisolated func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
         guard let message = WireMessage(dictionary: userInfo) else { return }
         Task { @MainActor in self.received(message) }
+    }
+
+    nonisolated func session(_ session: WCSession, didFinish userInfoTransfer: WCSessionUserInfoTransfer, error: (any Error)?) {
+        guard case .match(let match) = WireMessage(dictionary: userInfoTransfer.userInfo) else { return }
+        let id = match.id
+        if let error {
+            // The id stays pending and is resent on the next activation.
+            Self.log.error("Match transfer \(id.uuidString, privacy: .public) failed: \(error.localizedDescription, privacy: .public)")
+            return
+        }
+        Task { @MainActor in self.onMatchDelivered(id) }
     }
 }

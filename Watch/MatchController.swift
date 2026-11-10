@@ -1,5 +1,6 @@
 import Foundation
 import Observation
+import os
 import RefereeKit
 
 /// Owns the current match. Every mutation goes through here, is saved at once, reschedules
@@ -15,6 +16,9 @@ final class MatchController {
     private(set) var storedSetup: SetupMessage?
     private(set) var storedMatchIDs: Set<UUID> = []
     var selectedPresetID: UUID = MatchPreset.builtIn[0].id
+    /// Set while the last save of the current match failed. The clock page shows a red banner,
+    /// and the next change saves the whole match again.
+    private(set) var saveError: String?
 
     let workout = WorkoutManager()
     let notifications = NotificationPermissions()
@@ -25,6 +29,10 @@ final class MatchController {
     @ObservationIgnored private let setupStore = SetupStore(url: SetupStore.defaultURL())
     @ObservationIgnored private let alerts = AlertService()
     @ObservationIgnored private let connectivity = ConnectivityService()
+    @ObservationIgnored private let pendingStore = PendingSendStore(url: PendingSendStore.defaultURL())
+    /// Finished matches not yet delivered to the iPhone. Persisted in `pendingStore`.
+    @ObservationIgnored private var pendingSends: Set<UUID> = []
+    @ObservationIgnored private static let log = Logger(subsystem: "com.refereewatch.app.watchkitapp", category: "match")
 
     private init() {
         deviceID = DeviceIdentity.current()
@@ -37,9 +45,12 @@ final class MatchController {
         // Recovery comes from the stored anchors; nothing counted ticks.
         match = all.first { $0.isKickedOff && !$0.isFinished }
         storedSetup = setupStore.load()
+        pendingSends = pendingStore.load()
 
         alerts.onFire = { [weak self] delivery in self?.alertFired(delivery) }
         connectivity.onMessage = { [weak self] message in self?.receive(message) }
+        connectivity.onActivated = { [weak self] in self?.resendPending() }
+        connectivity.onMatchDelivered = { [weak self] id in self?.delivered(id) }
         connectivity.activate()
 
         refresh()
@@ -70,6 +81,8 @@ final class MatchController {
     /// On launch and whenever the scene becomes active: records the announced added time when
     /// normal end has passed, and replans every alert from the anchors.
     func refresh() {
+        // Retry a failed save even when nothing else changes.
+        if saveError != nil, let match { save(match) }
         markAnnouncedIfDue()
         reschedule()
         Task { await notifications.refresh() }
@@ -99,10 +112,19 @@ final class MatchController {
         Task { await workout.start(at: anchor.wall) }
     }
 
-    /// The Action button's start: opens the running match, or starts a new one.
-    func startOrOpenFromIntent() {
-        if isRunning { return }
-        startMatch(useSetup: usableSetup != nil)
+    /// The Action button's start. Never starts a match: the app opens on the running match,
+    /// or on the pre-match screen with fresh permission warnings. A finished match keeps its
+    /// full time screen; "New match" there leads to the pre-match screen.
+    func openFromActionButton() {
+        guard !isRunning else { return }
+        workout.refreshHealthStatus()
+        refresh()
+    }
+
+    /// True while a match is in a period where the clock runs, so a stoppage can be toggled.
+    var isInPlayingPeriod: Bool {
+        guard let match, match.isKickedOff, !match.isFinished else { return false }
+        return match.clock.period.isPlaying
     }
 
     /// Clears a finished match so the pre-match screen shows again.
@@ -233,10 +255,13 @@ final class MatchController {
             let summary = await workout.end(at: end, fallbackDuration: fallback)
             guard var m = self.match, m.id == id else {
                 // The referee already moved on; update the stored copy instead.
-                if var stored = try? store.load(id: id) {
+                do {
+                    guard var stored = try store.load(id: id) else { return }
                     stored.setWorkout(summary, deviceID: deviceID, now: Date())
-                    try? store.save(stored)
-                    connectivity.send(stored)
+                    try store.save(stored)
+                    sendToPhone(stored)
+                } catch {
+                    Self.log.error("Could not add the workout to match \(id.uuidString, privacy: .public): \(error.localizedDescription, privacy: .public)")
                 }
                 return
             }
@@ -254,13 +279,63 @@ final class MatchController {
     }
 
     /// Saves at once, replans the alerts and sends a finished match to the iPhone.
+    /// A failed save is shown on the clock page; the next commit saves the whole match again.
     private func commit(_ m: Match) {
         match = m
-        try? store.save(m)
+        save(m)
         storedMatchIDs.insert(m.id)
         reschedule()
         if m.isFinished {
-            connectivity.send(m)
+            sendToPhone(m)
+        }
+    }
+
+    private func save(_ m: Match) {
+        do {
+            try store.save(m)
+            saveError = nil
+        } catch {
+            saveError = error.localizedDescription
+            Self.log.error("Could not save match \(m.id.uuidString, privacy: .public): \(error.localizedDescription, privacy: .public)")
+        }
+    }
+
+    // MARK: Sending
+
+    /// Records the match as pending before queueing it, so a relaunch resends it until the
+    /// iPhone has it.
+    private func sendToPhone(_ m: Match) {
+        if pendingSends.insert(m.id).inserted { savePending() }
+        connectivity.send(m)
+    }
+
+    private func delivered(_ id: UUID) {
+        guard pendingSends.remove(id) != nil else { return }
+        savePending()
+    }
+
+    /// On activation: resends every pending match that the system is not still transferring.
+    private func resendPending() {
+        let queued = connectivity.queuedMatchIDs()
+        for id in pendingSends.subtracting(queued) {
+            do {
+                if let stored = try store.load(id: id) {
+                    connectivity.send(stored)
+                } else {
+                    pendingSends.remove(id)
+                    savePending()
+                }
+            } catch {
+                Self.log.error("Could not load pending match \(id.uuidString, privacy: .public): \(error.localizedDescription, privacy: .public)")
+            }
+        }
+    }
+
+    private func savePending() {
+        do {
+            try pendingStore.save(pendingSends)
+        } catch {
+            Self.log.error("Could not save the pending sends: \(error.localizedDescription, privacy: .public)")
         }
     }
 
@@ -275,19 +350,51 @@ final class MatchController {
             storedSetup = setup
             try? setupStore.save(setup)
         case .match(let remote):
-            let local = match?.id == remote.id ? match : (try? store.load(id: remote.id)) ?? nil
-            let result = SyncPayload.mergeReceived(local: local, remote: remote)
-            if result.changed {
-                try? store.save(result.merged)
-                storedMatchIDs.insert(result.merged.id)
-                if match?.id == result.merged.id {
-                    match = result.merged
-                    reschedule()
+            let local: Match?
+            if let match, match.id == remote.id {
+                local = match
+            } else {
+                do {
+                    // Nil means there is no local copy, so the remote one is simply saved.
+                    local = try store.load(id: remote.id)
+                } catch {
+                    // The local file exists but cannot be read. Never overwrite it.
+                    keepReceivedCopy(remote, loadError: error)
+                    return
                 }
             }
-            if result.needsSendBack {
-                connectivity.send(result.merged)
+            let result = SyncPayload.mergeReceived(local: local, remote: remote)
+            if result.changed {
+                if match?.id == result.merged.id {
+                    match = result.merged
+                    save(result.merged)
+                    reschedule()
+                } else {
+                    do {
+                        try store.save(result.merged)
+                    } catch {
+                        Self.log.error("Could not save received match \(remote.id.uuidString, privacy: .public): \(error.localizedDescription, privacy: .public)")
+                    }
+                }
+                storedMatchIDs.insert(result.merged.id)
             }
+            if result.needsSendBack {
+                sendToPhone(result.merged)
+            }
+        }
+    }
+
+    /// Writes the remote copy to "<id>.received.json" beside the store's folder, so it is kept
+    /// for recovery without the store ever loading it as a match.
+    private func keepReceivedCopy(_ remote: Match, loadError: any Error) {
+        let url = store.directory.deletingLastPathComponent()
+            .appending(path: "\(remote.id.uuidString).received.json", directoryHint: .notDirectory)
+        do {
+            let data = try SyncCoding.makeEncoder(pretty: true).encode(remote.normalized())
+            try data.write(to: url, options: .atomic)
+            Self.log.error("Match \(remote.id.uuidString, privacy: .public) could not be read (\(loadError.localizedDescription, privacy: .public)). Kept the received copy at \(url.path(percentEncoded: false), privacy: .public) and skipped the merge.")
+        } catch {
+            Self.log.error("Match \(remote.id.uuidString, privacy: .public) could not be read, and the received copy could not be kept: \(error.localizedDescription, privacy: .public)")
         }
     }
 }

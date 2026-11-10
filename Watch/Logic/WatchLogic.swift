@@ -74,6 +74,28 @@ enum AlertSchedule {
         return result
     }
 
+    /// The backup notification fires this long after the in-app deadline, so the in-app
+    /// alert can remove it first and the wrist does not buzz twice.
+    static let backupDelay: TimeInterval = 1.5
+
+    /// An in-app alert that wakes more than this late (for example after suspension) checks
+    /// whether its backup was already shown before buzzing.
+    static let lateThreshold: TimeInterval = 2
+
+    /// Seconds from now for the backup notification's trigger. At least 1 s, the system minimum.
+    static func backupInterval(secondsFromNow: TimeInterval) -> TimeInterval {
+        max(1, secondsFromNow + backupDelay)
+    }
+
+    static func isLate(_ lateness: Duration) -> Bool {
+        lateness > .seconds(lateThreshold)
+    }
+
+    /// A late in-app alert skips its haptic when its backup notification was already delivered.
+    static func shouldPlayLateHaptic(_ delivery: AlertDelivery, deliveredIDs: Set<String>) -> Bool {
+        !deliveredIDs.contains(delivery.primaryID)
+    }
+
     /// The alerts to plan for a match. Nothing is planned before kick off or after the final whistle.
     static func plan(for match: Match?, now: Anchor) -> [PlannedAlert] {
         guard let match, match.isKickedOff, !match.isFinished else { return [] }
@@ -165,8 +187,9 @@ enum TransitionLogic {
 struct CrownAccumulator: Sendable, Equatable {
     /// Rotation needed to toggle a stoppage. Large enough that a brush does nothing.
     static let toggleThreshold: Double = 0.9
-    /// Rotation per minute of added time.
-    static let minuteStep: Double = 0.35
+    /// Rotation per minute of added time in edit mode. Larger than the toggle threshold,
+    /// so one minute needs a clear, deliberate turn.
+    static let minuteStep: Double = 1.2
 
     private(set) var lastOffset: Double?
     private(set) var accumulated: Double = 0
@@ -204,6 +227,35 @@ struct CrownAccumulator: Sendable, Equatable {
 
 // MARK: Added time panel
 
+/// What the crown does on the clock page. It toggles a stoppage unless the referee has
+/// tapped the added time panel to edit it. Edit mode ends after `timeout` with no crown
+/// input, on another tap, or when the panel goes away.
+struct AddedTimeEditMode: Sendable, Equatable {
+    static let timeout: Duration = .seconds(3)
+
+    /// The last tap or crown input while editing. Nil when not editing.
+    private(set) var lastActivity: ContinuousClock.Instant?
+
+    func isActive(at now: ContinuousClock.Instant) -> Bool {
+        guard let lastActivity else { return false }
+        return now - lastActivity < Self.timeout
+    }
+
+    /// A tap on the panel enters edit mode, or leaves it when already editing.
+    mutating func tap(at now: ContinuousClock.Instant) {
+        lastActivity = isActive(at: now) ? nil : now
+    }
+
+    /// Crown input while editing keeps edit mode open.
+    mutating func touch(at now: ContinuousClock.Instant) {
+        if isActive(at: now) { lastActivity = now }
+    }
+
+    mutating func exit() {
+        lastActivity = nil
+    }
+}
+
 /// What the added time panel shows.
 struct AddedTimePanel: Sendable, Equatable {
     var announced: Int
@@ -215,11 +267,19 @@ struct AddedTimePanel: Sendable, Equatable {
 
     var headline: String { "+\(announced)" }
 
+    /// The panel's text outside edit mode.
     var detail: String {
-        if pastNormalEnd { return "Announced. Crown adds" }
-        if refereeSet { return "Your value (sugg. +\(suggested))" }
-        return "Suggested. Crown sets"
+        if pastNormalEnd { return "Announced. Tap to add" }
+        if refereeSet { return "Your value (sugg. +\(suggested)). Tap to change" }
+        return "Suggested. Tap to change"
     }
+
+    /// The panel's text in edit mode.
+    var editingDetail: String {
+        pastNormalEnd ? "Turn crown to add. Up only" : "Turn crown to change"
+    }
+
+    func detail(editing: Bool) -> String { editing ? editingDetail : detail }
 
     /// Nil when the panel is hidden.
     static func make(clock: MatchClock, config: MatchConfig, now: Anchor) -> AddedTimePanel? {

@@ -9,12 +9,14 @@
 /* Begin PBXBuildFile section */
 		0EB290E7795A10EBF7E5902F /* EventEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003DE28F7AE5F7C655061ED9 /* EventEditorView.swift */; };
 		1128FD9EC042CDFA110FE717 /* ReportPDF.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5538FF0E09B8E206A85152 /* ReportPDF.swift */; };
+		1322DF066F15AD984039CC9F /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 2BEA859F36C14193405132C3 /* PrivacyInfo.xcprivacy */; };
 		1E7A9F4ABBD2F9FF482A6771 /* EventListPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDA55DF898D249AF58ECC99 /* EventListPage.swift */; };
 		1FA16F8AE6BB2901F70B3C51 /* RefereeKit in Frameworks */ = {isa = PBXBuildFile; productRef = FB220FE3323F953D2621A28B /* RefereeKit */; };
 		21E21F531AE8EECF7FD5434C /* WorkoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC1D2BC24FB917BDB7E8E42 /* WorkoutManager.swift */; };
 		21FF34E6F5BE7E57C9E8C54F /* SetupStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B985D01608D7BB005679BC /* SetupStore.swift */; };
 		297E95FDC19550EF31142942 /* ClockPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DC559528063F429AD0926C /* ClockPage.swift */; };
 		31926CEE6057F26DE62E5EBD /* RefereeWatchWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 00EA58F9F422660FAA24C5A6 /* RefereeWatchWatch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		32F443AB9EFFAC979BDBF9CC /* PendingSendStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E353B248F1A6AB411AB0F67 /* PendingSendStore.swift */; };
 		38189A730EB104C9763AAB4A /* AppModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F7146B8C17F0C2FEF3F6AE /* AppModelTests.swift */; };
 		42815C0FE3DB3D5E3B95A3AB /* PeriodPages.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA8E27CB7FC3876B9989C6D /* PeriodPages.swift */; };
 		474D8EF12D64BD9E5DD4A99D /* HelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639682E141E0EF5045B2E013 /* HelperTests.swift */; };
@@ -38,6 +40,7 @@
 		9EADD9BFCEE58DE0F2809D9C /* NotificationPermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2405F3E244D57E1759543436 /* NotificationPermissions.swift */; };
 		9FEB99E82949414F85C21FA9 /* RefereeIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045A12F8CA2ED588D412EBC5 /* RefereeIntents.swift */; };
 		A44FB69003B4909F2E0D950C /* ReportLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD764C1FDA96ED10BA6E77D /* ReportLayout.swift */; };
+		B234C24C1AAC827D2E4A7782 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = FC7B47ECD3C7F571A67311F6 /* PrivacyInfo.xcprivacy */; };
 		B9C7A9373EB7833B4BC5EA21 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4306C4029D8FBA556E6CA2 /* Components.swift */; };
 		B9E9DFA05054BA5724B2FF45 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992EBB3807375FF36CA60DC4 /* RootView.swift */; };
 		C3A9AF1616096ADBEFD55B0B /* WatchLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62697F3CCDE7F9E16573CAA /* WatchLogic.swift */; };
@@ -82,9 +85,11 @@
 		00EA58F9F422660FAA24C5A6 /* RefereeWatchWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RefereeWatchWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		045A12F8CA2ED588D412EBC5 /* RefereeIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefereeIntents.swift; sourceTree = "<group>"; };
 		0E13A1170EDA52E7BEB48F71 /* ReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportView.swift; sourceTree = "<group>"; };
+		0E353B248F1A6AB411AB0F67 /* PendingSendStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingSendStore.swift; sourceTree = "<group>"; };
 		1711D768A4763DD50C3162B0 /* ReportPDFRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportPDFRenderer.swift; sourceTree = "<group>"; };
 		2405F3E244D57E1759543436 /* NotificationPermissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPermissions.swift; sourceTree = "<group>"; };
 		2866D22E8176D447D7456C7F /* ConnectivityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectivityService.swift; sourceTree = "<group>"; };
+		2BEA859F36C14193405132C3 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		3434132FCF0F8329D44D4F54 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		34581BA9533037B96A8029F4 /* ReportRenderingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportRenderingTests.swift; sourceTree = "<group>"; };
 		357C3BB9B4E23C008DFAFFC3 /* HexColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexColor.swift; sourceTree = "<group>"; };
@@ -118,6 +123,7 @@
 		F35FA15E417C16C08FF85C05 /* LogEventPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogEventPage.swift; sourceTree = "<group>"; };
 		F4D9E8030886E5E4BCFA06A5 /* RefereeWatchWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefereeWatchWatchApp.swift; sourceTree = "<group>"; };
 		FA5538FF0E09B8E206A85152 /* ReportPDF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportPDF.swift; sourceTree = "<group>"; };
+		FC7B47ECD3C7F571A67311F6 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +151,7 @@
 			children = (
 				3434132FCF0F8329D44D4F54 /* Info.plist */,
 				D6CB5A6890981FB162673E64 /* MatchController.swift */,
+				2BEA859F36C14193405132C3 /* PrivacyInfo.xcprivacy */,
 				F4D9E8030886E5E4BCFA06A5 /* RefereeWatchWatchApp.swift */,
 				C739C4AC334D9A2A107954BD /* Intents */,
 				3F3F00606A832EEAC2369A79 /* Logic */,
@@ -201,6 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				D68932E7E1A7161D61BDCA63 /* Info.plist */,
+				FC7B47ECD3C7F571A67311F6 /* PrivacyInfo.xcprivacy */,
 				8A6209F8E94B7232D884AA9A /* RefereeWatchApp.swift */,
 				A9E482171A60FFADB40FF496 /* Model */,
 				ADEE8D1F396237759537FF78 /* Report */,
@@ -226,6 +234,7 @@
 				9393BAC4FCD00AF570F4D8CA /* AlertService.swift */,
 				66EBD3F9123883D57ADDA140 /* ConnectivityService.swift */,
 				2405F3E244D57E1759543436 /* NotificationPermissions.swift */,
+				0E353B248F1A6AB411AB0F67 /* PendingSendStore.swift */,
 				D7B985D01608D7BB005679BC /* SetupStore.swift */,
 				BFC1D2BC24FB917BDB7E8E42 /* WorkoutManager.swift */,
 			);
@@ -298,6 +307,7 @@
 			buildConfigurationList = 72718218046079653310FB25 /* Build configuration list for PBXNativeTarget "RefereeWatch" */;
 			buildPhases = (
 				4CD50EB18D18D67E30048BB7 /* Sources */,
+				7E6DD71844E826D87CC01C5E /* Resources */,
 				7C395ADD1694B780F1C2F063 /* Frameworks */,
 				A64BA262CD3B78059609BEFB /* Embed Watch Content */,
 			);
@@ -337,6 +347,7 @@
 			buildConfigurationList = 6A3066DCAAC479D034A94EE5 /* Build configuration list for PBXNativeTarget "RefereeWatchWatch" */;
 			buildPhases = (
 				7780418443A02F490E6ED974 /* Sources */,
+				C4CCFD1D7E62A9C8D1FE1A0C /* Resources */,
 				75742CC3A37A2C452490F7DB /* Frameworks */,
 			);
 			buildRules = (
@@ -398,6 +409,25 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		7E6DD71844E826D87CC01C5E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B234C24C1AAC827D2E4A7782 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C4CCFD1D7E62A9C8D1FE1A0C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1322DF066F15AD984039CC9F /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		0D81A9B70E3CEFDD5DE24D45 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -444,6 +474,7 @@
 				48C37C932093F622B487F568 /* MatchScreens.swift in Sources */,
 				9EADD9BFCEE58DE0F2809D9C /* NotificationPermissions.swift in Sources */,
 				628D9FA2B0AFDA96D0D3940F /* PenaltiesPage.swift in Sources */,
+				32F443AB9EFFAC979BDBF9CC /* PendingSendStore.swift in Sources */,
 				42815C0FE3DB3D5E3B95A3AB /* PeriodPages.swift in Sources */,
 				7CC97D7F3070DE4D3F2C7839 /* PreMatchView.swift in Sources */,
 				9FEB99E82949414F85C21FA9 /* RefereeIntents.swift in Sources */,

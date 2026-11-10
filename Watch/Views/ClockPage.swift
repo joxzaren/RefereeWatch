@@ -8,6 +8,8 @@ struct ClockPage: View {
     @Environment(MatchController.self) private var controller
     @State private var crownValue = 0.0
     @State private var crown = CrownAccumulator()
+    /// Set by a tap on the added time panel. Only then does the crown change added time.
+    @State private var editMode = AddedTimeEditMode()
 
     var body: some View {
         TimelineView(.periodic(from: .now, by: 0.5)) { _ in
@@ -47,23 +49,42 @@ struct ClockPage: View {
             .minimumScaleFactor(0.5)
             .accessibilityElement(children: .combine)
 
+            if controller.saveError != nil {
+                SaveErrorBanner()
+            }
             if let panel {
-                AddedTimePanelView(panel: panel)
+                AddedTimePanelView(panel: panel, editing: editMode.isActive(at: .now)) {
+                    editMode.tap(at: .now)
+                    crown.idle()
+                    WKInterfaceDevice.current().play(.click)
+                }
             }
             StoppageButton(match: match, now: now)
             WarningBanners(compact: true)
         }
     }
 
+    /// The crown toggles a stoppage. Only in the explicit edit mode, entered by tapping the
+    /// added time panel, does it change added time instead.
     private func crownChanged(_ offset: Double) {
         guard let match = controller.match, match.clock.period.isPlaying else { return }
-        let now = controller.now()
-        if AddedTimePanel.make(clock: match.clock, config: match.config, now: now) != nil {
+        let instant = ContinuousClock.now
+        let panelShown = AddedTimePanel.make(clock: match.clock, config: match.config, now: controller.now()) != nil
+        if panelShown, editMode.isActive(at: instant) {
+            editMode.touch(at: instant)
             let steps = crown.minuteSteps(offset: offset)
             if steps != 0, controller.adjustAddedTime(by: steps) {
                 WKInterfaceDevice.current().play(.click)
             }
-        } else if crown.toggle(offset: offset) {
+            return
+        }
+        if editMode.lastActivity != nil {
+            // Edit mode just timed out or the panel went away: start the toggle from rest,
+            // so a leftover minute turn can never toggle a stoppage.
+            editMode.exit()
+            crown.idle()
+        }
+        if crown.toggle(offset: offset) {
             if controller.toggleStoppage() {
                 WKInterfaceDevice.current().play(.click)
             }
@@ -73,23 +94,50 @@ struct ClockPage: View {
 
 private struct AddedTimePanelView: View {
     let panel: AddedTimePanel
+    let editing: Bool
+    let onTap: () -> Void
 
     var body: some View {
+        let detail = panel.detail(editing: editing)
         HStack(spacing: 6) {
             Text(panel.headline)
                 .font(.title3.bold().monospacedDigit())
                 .foregroundStyle(panel.pastNormalEnd ? .orange : .primary)
-            Text(panel.detail).font(.system(size: 11)).foregroundStyle(.secondary).lineLimit(2)
+            Text(detail)
+                .font(.system(size: 11, weight: editing ? .semibold : .regular))
+                .foregroundStyle(editing ? .primary : .secondary)
+                .lineLimit(2)
             Spacer(minLength: 0)
-            Image(systemName: panel.pastNormalEnd ? "plus" : "digitalcrown.arrow.clockwise")
+            Image(systemName: editing ? "digitalcrown.arrow.clockwise.fill" : "hand.tap")
                 .font(.caption2)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(editing ? .orange : .secondary)
         }
         .padding(.horizontal, 6)
         .padding(.vertical, 2)
-        .background(RoundedRectangle(cornerRadius: 8).fill(Color.orange.opacity(0.18)))
+        .background(RoundedRectangle(cornerRadius: 8).fill(Color.orange.opacity(editing ? 0.45 : 0.18)))
+        .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.orange, lineWidth: editing ? 2 : 0))
+        .contentShape(RoundedRectangle(cornerRadius: 8))
+        .onTapGesture(perform: onTap)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("Added time \(panel.announced) minutes. \(panel.detail)")
+        .accessibilityLabel("Added time \(panel.announced) minutes. \(detail)")
+        .accessibilityAddTraits(.isButton)
+        .accessibilityAction { onTap() }
+    }
+}
+
+/// Shown while the last save of the running match failed. The next change retries it.
+private struct SaveErrorBanner: View {
+    var body: some View {
+        Label("Could not save the match", systemImage: "exclamationmark.triangle.fill")
+            .font(.system(size: 11, weight: .semibold))
+            .foregroundStyle(.white)
+            .lineLimit(1)
+            .minimumScaleFactor(0.7)
+            .padding(.horizontal, 6)
+            .padding(.vertical, 2)
+            .frame(maxWidth: .infinity)
+            .background(RoundedRectangle(cornerRadius: 6).fill(Color.red))
+            .accessibilityElement(children: .combine)
     }
 }
 
