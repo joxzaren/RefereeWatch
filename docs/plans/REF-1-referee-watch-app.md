@@ -1,6 +1,6 @@
 # REF-1 implementation plan
 
-Status: v1, 2026-11-10
+Status: v2, 2026-11-10 (Codex plan round 1 incorporated)
 Brief: REF-1 brief v4 (approved)
 
 ## Environment facts that shape the plan
@@ -55,16 +55,32 @@ RefereeWatch/
 
 - `StoppageLedger` holds closed and open stoppage intervals per period, as anchor pairs.
 - `stoppedBeforeNormalEnd` and `stoppedDuringAddedTime` split each interval at the normal end. An interval that spans the boundary is split.
-- `AddedTime` per period holds `suggestedMinutes = ceil(stoppedBeforeNormalEnd / 60)` (0 stays 0, exactly 120 seconds is 2), an optional `refereeMinutes` set by the crown before normal end, and `announcedMinutes`, fixed at the normal end to `refereeMinutes ?? suggestedMinutes`.
-- After the announcement, `increase(by:)` is allowed and decrease is refused (scope 8).
-- The deadline for the end of added time is `normalEnd + announcedMinutes * 60 + stoppedDuringAddedTime + an open stoppage's running time`. Every stoppage start or end recomputes it.
+- `AddedTime` per period holds:
+  - `suggestedMinutes = ceil(stoppedBeforeNormalEnd / 60)` (0 stays 0, exactly 120 seconds is 2).
+  - An optional `refereeMinutes` set by the crown before normal end.
+  - An `increases` total added after normal end.
+- `announcedMinutes(now)` is a pure function of the stored state: `refereeMinutes ?? suggestedMinutes`, plus `increases`. Once normal end has passed, `stoppedBeforeNormalEnd` can no longer change, so the announced value is fixed at that boundary without any event or UI action having to record it. A stoppage that is open at the normal end is split there, so its part before normal end counts toward the suggestion.
+- When the app handles the normal end alert or relaunches after it, it also writes the announced value into the match file. This is idempotent, and it is only for the report and sync, never for timing.
+- After normal end, crown input can only add to `increases`. Decrease is refused (scope 8).
+- The deadline for the end of added time is `normalEnd + announcedMinutes * 60 + stoppedDuringAddedTime`. It is defined only while no stoppage is open. While one is open, `finalDeadline` returns nil.
 - The suggestion is visible from the first warning offset (5 minutes before normal end by default), per scope 8.
 
 ### Alerts
 
-- `AlertPlan.alerts(for: clock, config:, now:)` returns the upcoming alerts for the current period as `(kind, dueElapsed)`: each warning offset before normal end, the normal end, and the end of added time when it is known.
-- The watch layer turns each one into a monotonic deadline. A pure function does this, so the timing is unit tested.
+- `AlertPlan.alerts(for: clock, config:, now:)` returns the upcoming alerts for the current period as `(kind, dueElapsed)`:
+  - Each warning offset before normal end.
+  - The normal end.
+  - The end of added time, which is always included unless a stoppage is open.
+- Before normal end, the end of added time is provisional: it uses the current referee value or suggestion. It is therefore already scheduled, both in app and as a backup notification, before the normal end boundary is crossed. Its time is replaced whenever the inputs change.
+- While a stoppage is open, the end of added time is left out. The watch removes both the in-app task and the backup notification for it as soon as a stoppage starts. It schedules the new deadline when the stoppage ends. An open stoppage needs the referee to end it, and ending it wakes the app, so the deadline can never fire early.
+- The watch layer turns each alert into a monotonic deadline. A pure function does this, so the timing is unit tested.
 - Alerts that are already past are not returned. Each alert has a stable id (`matchID-period-kind`), so rescheduling replaces it rather than duplicating it.
+- Rescheduling runs on:
+  - Every state change: transition, stoppage start or end, crown change of added time, increase.
+  - App launch and return to the foreground.
+  - The firing of the normal end alert itself.
+  - It never depends on a UI redraw.
+- Suspension fallback at the normal end boundary: the end of added time backup notification was already scheduled provisionally before the boundary, with the value current at that time. Because nothing can change the announced value while the app is suspended (stoppages and crown input both need the app), that provisional time is the correct one.
 
 ### Events and score
 
@@ -97,7 +113,9 @@ RefereeWatch/
 
 - **WorkoutManager:** `HKWorkoutSession` (`.soccer`, `.outdoor`) with `HKLiveWorkoutBuilder` and `HKWorkoutRouteBuilder` fed by `CLLocationManager`. It starts at kick off and ends at the final whistle. It saves the workout (with a route only when location is authorized) and reports distance and average heart rate into the match.
   - If the session fails to start or ends early, a published `sessionHealthy = false` shows the "screen may sleep" banner (scope 15).
-- **Permissions:** separate requests for HealthKit (share workout, read heart rate and distance), location (when in use) and notifications.
+- **Permissions:** separate requests for HealthKit (share `HKWorkoutType` and `HKSeriesType.workoutRoute()`, read heart rate and walking or running distance), location (when in use) and notifications.
+  - The route is saved only when both location authorization and route sharing authorization are granted.
+  - If route sharing is denied but workout sharing is granted, the workout is saved without a route.
   - The pre-match screen shows the status of each permission. It shows a warning when notification authorization is denied, or when alert style or sound and haptics are disabled (read via `UNNotificationSettings`).
   - The clock and event logging never depend on any permission (scope 14).
 - **AlertService:** for each planned alert it runs a `Task` sleeping until the monotonic deadline, using `ContinuousClock` with zero tolerance. It plays `WKInterfaceDevice.current().play(.notification)` (end of normal time and end of added time repeat three times, a touch shorter for warnings).
@@ -128,6 +146,9 @@ RefereeWatch/
 
 - Both apps use `WCSession`.
 - Setup goes from iPhone to watch with `updateApplicationContext`, so only the latest setup is kept, and also with `transferUserInfo` for queued delivery.
+  - Each setup carries a `Version` (modified time and device id), and the watch applies it only when it wins over the stored setup under the same `SyncMerge.resolve` rule.
+  - Stale and duplicate deliveries from either transport are dropped.
+  - Once a match has kicked off, a setup for it is no longer applied to the watch's running match.
 - Match data goes both ways as a full `SyncPayload` (the match with all event versions) using `transferUserInfo`, which queues and retries across disconnects.
   - The receiver merges with `SyncMerge.merge` and persists the result.
   - It sends the merged result back only when the merge changed something the sender did not have, which stops ping-pong.
@@ -138,7 +159,7 @@ RefereeWatch/
 - `swift test` in `Packages/RefereeKit`: all domain tests.
 - `xcodebuild build` of the iOS scheme for `generic/platform=iOS Simulator`, and of the watch scheme for `generic/platform=watchOS Simulator`, both with `SWIFT_TREAT_WARNINGS_AS_ERRORS=YES` and `GCC_TREAT_WARNINGS_AS_ERRORS=YES`.
 - A small iOS unit test target runs on an iOS 27.2 simulator for the PDF report rendering.
-- Unit tests cover the clock, period transitions, stoppage splitting, added time (suggestion, referee override, announce, increase only, extension), the alert plan, event minutes, undo and edit, score, sync merge including ties and edit against tombstone, persistence round trip and clock restore after relaunch (Done when 11).
+- Unit tests cover the clock, period transitions, stoppage splitting (including a stoppage open across normal end), added time (suggestion, referee override, announce, increase only, extension), the alert plan (provisional final alert, final alert removed while a stoppage is open, rescheduled on close), setup version ordering, event minutes, undo and edit, score, sync merge including ties and edit against tombstone, persistence round trip and clock restore after relaunch (Done when 11).
 
 ## Steps
 
