@@ -7,12 +7,43 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0EB290E7795A10EBF7E5902F /* EventEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003DE28F7AE5F7C655061ED9 /* EventEditorView.swift */; };
+		1128FD9EC042CDFA110FE717 /* ReportPDF.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5538FF0E09B8E206A85152 /* ReportPDF.swift */; };
+		1E7A9F4ABBD2F9FF482A6771 /* EventListPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDA55DF898D249AF58ECC99 /* EventListPage.swift */; };
 		1FA16F8AE6BB2901F70B3C51 /* RefereeKit in Frameworks */ = {isa = PBXBuildFile; productRef = FB220FE3323F953D2621A28B /* RefereeKit */; };
+		21E21F531AE8EECF7FD5434C /* WorkoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC1D2BC24FB917BDB7E8E42 /* WorkoutManager.swift */; };
+		21FF34E6F5BE7E57C9E8C54F /* SetupStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B985D01608D7BB005679BC /* SetupStore.swift */; };
+		297E95FDC19550EF31142942 /* ClockPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DC559528063F429AD0926C /* ClockPage.swift */; };
 		31926CEE6057F26DE62E5EBD /* RefereeWatchWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 00EA58F9F422660FAA24C5A6 /* RefereeWatchWatch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		38189A730EB104C9763AAB4A /* AppModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F7146B8C17F0C2FEF3F6AE /* AppModelTests.swift */; };
+		42815C0FE3DB3D5E3B95A3AB /* PeriodPages.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA8E27CB7FC3876B9989C6D /* PeriodPages.swift */; };
+		474D8EF12D64BD9E5DD4A99D /* HelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639682E141E0EF5045B2E013 /* HelperTests.swift */; };
+		48C37C932093F622B487F568 /* MatchScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF030E17804A3BEF5042DC8 /* MatchScreens.swift */; };
 		48F32E32D6ACDAF4780E2E74 /* RefereeWatchWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D9E8030886E5E4BCFA06A5 /* RefereeWatchWatchApp.swift */; };
+		497D9927E4AE3AC00DC1E359 /* ReportPDFRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1711D768A4763DD50C3162B0 /* ReportPDFRenderer.swift */; };
+		5261CC043FD0507D92328652 /* EventDraft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C98F87A82D546795B2C7DE6 /* EventDraft.swift */; };
+		591C7E57F54A50C96D707919 /* ConnectivityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EBD3F9123883D57ADDA140 /* ConnectivityService.swift */; };
+		5925BFEE851E89905D06FB26 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9393BAC4FCD00AF570F4D8CA /* AlertService.swift */; };
+		61EEEBEB861B17CB35ACC72E /* ReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E13A1170EDA52E7BEB48F71 /* ReportView.swift */; };
+		628D9FA2B0AFDA96D0D3940F /* PenaltiesPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872F13EE0581FAB92D5F2BCF /* PenaltiesPage.swift */; };
 		64DB88006348894F5AFDF419 /* RefereeKit in Frameworks */ = {isa = PBXBuildFile; productRef = A38C7F3BC78AB3C89470BD91 /* RefereeKit */; };
+		66F8C4F4112E6954279AC719 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1985DDE5C63BD3EAF18C446 /* HistoryView.swift */; };
+		7CC97D7F3070DE4D3F2C7839 /* PreMatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA6693D3C82BDBEC9440776 /* PreMatchView.swift */; };
 		8110BF3DA111DAA0F1368E78 /* ReportRenderingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34581BA9533037B96A8029F4 /* ReportRenderingTests.swift */; };
+		8CBBB87F122DD56076261E6E /* ConnectivityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2866D22E8176D447D7456C7F /* ConnectivityService.swift */; };
+		8D56F77C95615F8378DE219B /* LogEventPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35FA15E417C16C08FF85C05 /* LogEventPage.swift */; };
+		8FF7B2520E455939567BD05B /* HexColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357C3BB9B4E23C008DFAFFC3 /* HexColor.swift */; };
+		901D80C05A7C9F373D3EF956 /* SetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC708B752312384E30B578D5 /* SetupView.swift */; };
 		9172C9AD3BEECA16C07B9BC4 /* RefereeWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6209F8E94B7232D884AA9A /* RefereeWatchApp.swift */; };
+		9EADD9BFCEE58DE0F2809D9C /* NotificationPermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2405F3E244D57E1759543436 /* NotificationPermissions.swift */; };
+		9FEB99E82949414F85C21FA9 /* RefereeIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045A12F8CA2ED588D412EBC5 /* RefereeIntents.swift */; };
+		A44FB69003B4909F2E0D950C /* ReportLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD764C1FDA96ED10BA6E77D /* ReportLayout.swift */; };
+		B9C7A9373EB7833B4BC5EA21 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4306C4029D8FBA556E6CA2 /* Components.swift */; };
+		B9E9DFA05054BA5724B2FF45 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992EBB3807375FF36CA60DC4 /* RootView.swift */; };
+		C3A9AF1616096ADBEFD55B0B /* WatchLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62697F3CCDE7F9E16573CAA /* WatchLogic.swift */; };
+		C6576BD4F545957B043D4548 /* MatchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6CB5A6890981FB162673E64 /* MatchController.swift */; };
+		CD584EAF68401F9CD979C01F /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B829B3B9FC96044EFA3990 /* AppModel.swift */; };
+		D2B8E6105B2A5012EAE3791A /* SetupDraft.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45CF7AFEE74C4512FB2B942 /* SetupDraft.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,15 +78,46 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		003DE28F7AE5F7C655061ED9 /* EventEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventEditorView.swift; sourceTree = "<group>"; };
 		00EA58F9F422660FAA24C5A6 /* RefereeWatchWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RefereeWatchWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		045A12F8CA2ED588D412EBC5 /* RefereeIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefereeIntents.swift; sourceTree = "<group>"; };
+		0E13A1170EDA52E7BEB48F71 /* ReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportView.swift; sourceTree = "<group>"; };
+		1711D768A4763DD50C3162B0 /* ReportPDFRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportPDFRenderer.swift; sourceTree = "<group>"; };
+		2405F3E244D57E1759543436 /* NotificationPermissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPermissions.swift; sourceTree = "<group>"; };
+		2866D22E8176D447D7456C7F /* ConnectivityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectivityService.swift; sourceTree = "<group>"; };
 		3434132FCF0F8329D44D4F54 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		34581BA9533037B96A8029F4 /* ReportRenderingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportRenderingTests.swift; sourceTree = "<group>"; };
+		357C3BB9B4E23C008DFAFFC3 /* HexColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexColor.swift; sourceTree = "<group>"; };
 		39A28D8CE13572B386968B19 /* RefereeWatchTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = RefereeWatchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C98F87A82D546795B2C7DE6 /* EventDraft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDraft.swift; sourceTree = "<group>"; };
+		5CDA55DF898D249AF58ECC99 /* EventListPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListPage.swift; sourceTree = "<group>"; };
+		639682E141E0EF5045B2E013 /* HelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperTests.swift; sourceTree = "<group>"; };
+		66EBD3F9123883D57ADDA140 /* ConnectivityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectivityService.swift; sourceTree = "<group>"; };
+		872F13EE0581FAB92D5F2BCF /* PenaltiesPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenaltiesPage.swift; sourceTree = "<group>"; };
 		8A6209F8E94B7232D884AA9A /* RefereeWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefereeWatchApp.swift; sourceTree = "<group>"; };
+		8C4306C4029D8FBA556E6CA2 /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
+		91B829B3B9FC96044EFA3990 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		9393BAC4FCD00AF570F4D8CA /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
+		992EBB3807375FF36CA60DC4 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		AC708B752312384E30B578D5 /* SetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupView.swift; sourceTree = "<group>"; };
+		BFC1D2BC24FB917BDB7E8E42 /* WorkoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutManager.swift; sourceTree = "<group>"; };
+		C3DC559528063F429AD0926C /* ClockPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockPage.swift; sourceTree = "<group>"; };
+		CBD764C1FDA96ED10BA6E77D /* ReportLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportLayout.swift; sourceTree = "<group>"; };
+		D2F7146B8C17F0C2FEF3F6AE /* AppModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModelTests.swift; sourceTree = "<group>"; };
+		D62697F3CCDE7F9E16573CAA /* WatchLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchLogic.swift; sourceTree = "<group>"; };
 		D68932E7E1A7161D61BDCA63 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		D6CB5A6890981FB162673E64 /* MatchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchController.swift; sourceTree = "<group>"; };
+		D7B985D01608D7BB005679BC /* SetupStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupStore.swift; sourceTree = "<group>"; };
 		D7CAE49DBB5C1EA8F10CAEF1 /* RefereeWatch.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = RefereeWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DAA8E27CB7FC3876B9989C6D /* PeriodPages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodPages.swift; sourceTree = "<group>"; };
+		DFA6693D3C82BDBEC9440776 /* PreMatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreMatchView.swift; sourceTree = "<group>"; };
 		E2AA281823B06EFDD49509AD /* RefereeKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = RefereeKit; path = Packages/RefereeKit; sourceTree = SOURCE_ROOT; };
+		E45CF7AFEE74C4512FB2B942 /* SetupDraft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupDraft.swift; sourceTree = "<group>"; };
+		EEF030E17804A3BEF5042DC8 /* MatchScreens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchScreens.swift; sourceTree = "<group>"; };
+		F1985DDE5C63BD3EAF18C446 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		F35FA15E417C16C08FF85C05 /* LogEventPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogEventPage.swift; sourceTree = "<group>"; };
 		F4D9E8030886E5E4BCFA06A5 /* RefereeWatchWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefereeWatchWatchApp.swift; sourceTree = "<group>"; };
+		FA5538FF0E09B8E206A85152 /* ReportPDF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportPDF.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,9 +144,49 @@
 			isa = PBXGroup;
 			children = (
 				3434132FCF0F8329D44D4F54 /* Info.plist */,
+				D6CB5A6890981FB162673E64 /* MatchController.swift */,
 				F4D9E8030886E5E4BCFA06A5 /* RefereeWatchWatchApp.swift */,
+				C739C4AC334D9A2A107954BD /* Intents */,
+				3F3F00606A832EEAC2369A79 /* Logic */,
+				98EDE143A3A6E75F752C770E /* Services */,
+				41EC8EC9342F941143CB631E /* Views */,
 			);
 			path = Watch;
+			sourceTree = "<group>";
+		};
+		0CE692A5D582FC2704A6E073 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				003DE28F7AE5F7C655061ED9 /* EventEditorView.swift */,
+				F1985DDE5C63BD3EAF18C446 /* HistoryView.swift */,
+				0E13A1170EDA52E7BEB48F71 /* ReportView.swift */,
+				992EBB3807375FF36CA60DC4 /* RootView.swift */,
+				AC708B752312384E30B578D5 /* SetupView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		3F3F00606A832EEAC2369A79 /* Logic */ = {
+			isa = PBXGroup;
+			children = (
+				D62697F3CCDE7F9E16573CAA /* WatchLogic.swift */,
+			);
+			path = Logic;
+			sourceTree = "<group>";
+		};
+		41EC8EC9342F941143CB631E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C3DC559528063F429AD0926C /* ClockPage.swift */,
+				8C4306C4029D8FBA556E6CA2 /* Components.swift */,
+				5CDA55DF898D249AF58ECC99 /* EventListPage.swift */,
+				F35FA15E417C16C08FF85C05 /* LogEventPage.swift */,
+				EEF030E17804A3BEF5042DC8 /* MatchScreens.swift */,
+				872F13EE0581FAB92D5F2BCF /* PenaltiesPage.swift */,
+				DAA8E27CB7FC3876B9989C6D /* PeriodPages.swift */,
+				DFA6693D3C82BDBEC9440776 /* PreMatchView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		6BBE04CB04065133E0514009 /* Packages */ = {
@@ -100,6 +202,10 @@
 			children = (
 				D68932E7E1A7161D61BDCA63 /* Info.plist */,
 				8A6209F8E94B7232D884AA9A /* RefereeWatchApp.swift */,
+				A9E482171A60FFADB40FF496 /* Model */,
+				ADEE8D1F396237759537FF78 /* Report */,
+				A1B26CBD9E816AB20224658B /* Services */,
+				0CE692A5D582FC2704A6E073 /* Views */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -114,6 +220,18 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		98EDE143A3A6E75F752C770E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				9393BAC4FCD00AF570F4D8CA /* AlertService.swift */,
+				66EBD3F9123883D57ADDA140 /* ConnectivityService.swift */,
+				2405F3E244D57E1759543436 /* NotificationPermissions.swift */,
+				D7B985D01608D7BB005679BC /* SetupStore.swift */,
+				BFC1D2BC24FB917BDB7E8E42 /* WorkoutManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		9D89CA7832B6C44D474D0D8C = {
 			isa = PBXGroup;
 			children = (
@@ -125,9 +243,48 @@
 			);
 			sourceTree = "<group>";
 		};
+		A1B26CBD9E816AB20224658B /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				2866D22E8176D447D7456C7F /* ConnectivityService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		A9E482171A60FFADB40FF496 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				91B829B3B9FC96044EFA3990 /* AppModel.swift */,
+				3C98F87A82D546795B2C7DE6 /* EventDraft.swift */,
+				357C3BB9B4E23C008DFAFFC3 /* HexColor.swift */,
+				E45CF7AFEE74C4512FB2B942 /* SetupDraft.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		ADEE8D1F396237759537FF78 /* Report */ = {
+			isa = PBXGroup;
+			children = (
+				CBD764C1FDA96ED10BA6E77D /* ReportLayout.swift */,
+				FA5538FF0E09B8E206A85152 /* ReportPDF.swift */,
+				1711D768A4763DD50C3162B0 /* ReportPDFRenderer.swift */,
+			);
+			path = Report;
+			sourceTree = "<group>";
+		};
+		C739C4AC334D9A2A107954BD /* Intents */ = {
+			isa = PBXGroup;
+			children = (
+				045A12F8CA2ED588D412EBC5 /* RefereeIntents.swift */,
+			);
+			path = Intents;
+			sourceTree = "<group>";
+		};
 		E776593F99E57F5343F51207 /* iOSTests */ = {
 			isa = PBXGroup;
 			children = (
+				D2F7146B8C17F0C2FEF3F6AE /* AppModelTests.swift */,
+				639682E141E0EF5045B2E013 /* HelperTests.swift */,
 				34581BA9533037B96A8029F4 /* ReportRenderingTests.swift */,
 			);
 			path = iOSTests;
@@ -246,6 +403,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38189A730EB104C9763AAB4A /* AppModelTests.swift in Sources */,
+				474D8EF12D64BD9E5DD4A99D /* HelperTests.swift in Sources */,
 				8110BF3DA111DAA0F1368E78 /* ReportRenderingTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -254,7 +413,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD584EAF68401F9CD979C01F /* AppModel.swift in Sources */,
+				8CBBB87F122DD56076261E6E /* ConnectivityService.swift in Sources */,
+				5261CC043FD0507D92328652 /* EventDraft.swift in Sources */,
+				0EB290E7795A10EBF7E5902F /* EventEditorView.swift in Sources */,
+				8FF7B2520E455939567BD05B /* HexColor.swift in Sources */,
+				66F8C4F4112E6954279AC719 /* HistoryView.swift in Sources */,
 				9172C9AD3BEECA16C07B9BC4 /* RefereeWatchApp.swift in Sources */,
+				A44FB69003B4909F2E0D950C /* ReportLayout.swift in Sources */,
+				1128FD9EC042CDFA110FE717 /* ReportPDF.swift in Sources */,
+				497D9927E4AE3AC00DC1E359 /* ReportPDFRenderer.swift in Sources */,
+				61EEEBEB861B17CB35ACC72E /* ReportView.swift in Sources */,
+				B9E9DFA05054BA5724B2FF45 /* RootView.swift in Sources */,
+				D2B8E6105B2A5012EAE3791A /* SetupDraft.swift in Sources */,
+				901D80C05A7C9F373D3EF956 /* SetupView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,7 +434,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5925BFEE851E89905D06FB26 /* AlertService.swift in Sources */,
+				297E95FDC19550EF31142942 /* ClockPage.swift in Sources */,
+				B9C7A9373EB7833B4BC5EA21 /* Components.swift in Sources */,
+				591C7E57F54A50C96D707919 /* ConnectivityService.swift in Sources */,
+				1E7A9F4ABBD2F9FF482A6771 /* EventListPage.swift in Sources */,
+				8D56F77C95615F8378DE219B /* LogEventPage.swift in Sources */,
+				C6576BD4F545957B043D4548 /* MatchController.swift in Sources */,
+				48C37C932093F622B487F568 /* MatchScreens.swift in Sources */,
+				9EADD9BFCEE58DE0F2809D9C /* NotificationPermissions.swift in Sources */,
+				628D9FA2B0AFDA96D0D3940F /* PenaltiesPage.swift in Sources */,
+				42815C0FE3DB3D5E3B95A3AB /* PeriodPages.swift in Sources */,
+				7CC97D7F3070DE4D3F2C7839 /* PreMatchView.swift in Sources */,
+				9FEB99E82949414F85C21FA9 /* RefereeIntents.swift in Sources */,
 				48F32E32D6ACDAF4780E2E74 /* RefereeWatchWatchApp.swift in Sources */,
+				21FF34E6F5BE7E57C9E8C54F /* SetupStore.swift in Sources */,
+				C3A9AF1616096ADBEFD55B0B /* WatchLogic.swift in Sources */,
+				21E21F531AE8EECF7FD5434C /* WorkoutManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
