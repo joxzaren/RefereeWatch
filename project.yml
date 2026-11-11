@@ -1,0 +1,91 @@
+name: RefereeWatch
+options:
+  bundleIdPrefix: com.refereewatch
+  deploymentTarget:
+    iOS: "27.0"
+    watchOS: "27.0"
+  createIntermediateGroups: true
+  generateEmptyDirectories: true
+packages:
+  RefereeKit:
+    path: Packages/RefereeKit
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    SWIFT_TREAT_WARNINGS_AS_ERRORS: YES
+    GCC_TREAT_WARNINGS_AS_ERRORS: YES
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    DEVELOPMENT_TEAM: ""
+    CODE_SIGN_STYLE: Automatic
+targets:
+  RefereeWatch:
+    type: application
+    platform: iOS
+    sources: [iOS]
+    dependencies:
+      - package: RefereeKit
+      - target: RefereeWatchWatch
+    entitlements:
+      path: Shared/iOS.entitlements
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.refereewatch.app
+        INFOPLIST_KEY_CFBundleDisplayName: RefereeWatch
+        TARGETED_DEVICE_FAMILY: "1"
+    info:
+      path: iOS/Info.plist
+      properties:
+        CFBundleDisplayName: RefereeWatch
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        NSHealthShareUsageDescription: RefereeWatch reads the distance and heart rate of your refereeing workouts to show them in the match report.
+        NSHealthUpdateUsageDescription: RefereeWatch saves each match as a Soccer workout in Apple Health.
+  RefereeWatchWatch:
+    type: application
+    platform: watchOS
+    sources: [Watch]
+    dependencies:
+      - package: RefereeKit
+    entitlements:
+      path: Shared/Watch.entitlements
+      properties:
+        com.apple.developer.healthkit: true
+        com.apple.developer.healthkit.access: []
+        com.apple.developer.usernotifications.time-sensitive: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.refereewatch.app.watchkitapp
+        PRODUCT_NAME: RefereeWatch Watch
+    info:
+      path: Watch/Info.plist
+      properties:
+        CFBundleDisplayName: RefereeWatch
+        WKApplication: true
+        WKCompanionAppBundleIdentifier: com.refereewatch.app
+        WKRunsIndependentlyOfCompanionApp: true
+        WKBackgroundModes: [workout-processing]
+        NSHealthShareUsageDescription: RefereeWatch reads your heart rate and distance during a match to show them on the watch and in the match report.
+        NSHealthUpdateUsageDescription: RefereeWatch saves each match as a Soccer workout, with its route when you allow location, in Apple Health.
+        NSLocationWhenInUseUsageDescription: RefereeWatch uses your location during a match to record the route of your workout. The match clock works without it.
+  RefereeWatchTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources: [iOSTests]
+    dependencies:
+      - target: RefereeWatch
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.refereewatch.app.tests
+schemes:
+  RefereeWatch:
+    build:
+      targets:
+        RefereeWatch: all
+    test:
+      targets: [RefereeWatchTests]
+  RefereeWatchWatch:
+    build:
+      targets:
+        RefereeWatchWatch: all

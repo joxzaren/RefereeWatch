@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  package-tests:
+    name: package-tests
+    runs-on: xcode-27
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Select the newest Xcode 27
+        run: .github/scripts/select-xcode.sh
+      - name: Run RefereeKit tests
+        working-directory: Packages/RefereeKit
+        run: swift test
+
+  app-builds:
+    name: app-builds
+    runs-on: xcode-27
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Select the newest Xcode 27
+        run: .github/scripts/select-xcode.sh
+      - name: Build iPhone and watch apps for the simulators
+        run: scripts/build.sh
