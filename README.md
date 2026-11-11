@@ -6,9 +6,9 @@ The watch runs the match on its own: the match clock, stoppages, added time, hap
 
 ## Requirements
 
-- Xcode 27.2 or later, with the iOS 27 and watchOS 27 SDKs
+- Xcode 27.2 or later to build. Its iOS 27 and watchOS 27 SDKs build for the iOS 26 and watchOS 26 minimums
 - [XcodeGen](https://github.com/yonaskolb/XcodeGen) (`brew install xcodegen`) when you change `project.yml`
-- An Apple Watch on watchOS 27 and an iPhone on iOS 27 to run on device
+- An Apple Watch on watchOS 26 or later and an iPhone on iOS 26 or later to run on device
 
 ## Layout
 

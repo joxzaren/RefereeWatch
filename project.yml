@@ -2,8 +2,8 @@ name: RefereeWatch
 options:
   bundleIdPrefix: com.refereewatch
   deploymentTarget:
-    iOS: "27.0"
-    watchOS: "27.0"
+    iOS: "26.0"
+    watchOS: "26.0"
   createIntermediateGroups: true
   generateEmptyDirectories: true
 packages:
