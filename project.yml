@@ -52,7 +52,9 @@ targets:
       properties:
         com.apple.developer.healthkit: true
         com.apple.developer.healthkit.access: []
-        com.apple.developer.usernotifications.time-sensitive: true
+        # No time-sensitive notifications entitlement: personal (free) development
+        # teams cannot provision it. Add it back here with a paid team if backup
+        # alerts should break through Focus modes.
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.refereewatch.app.watchkitapp
