@@ -97,6 +97,8 @@ final class AlertService {
         content.title = delivery.title
         content.body = delivery.body
         content.sound = .default
+        // Time sensitive only takes effect with the time-sensitive entitlement, which
+        // needs a paid team. Without it the system delivers at the active level.
         content.interruptionLevel = .timeSensitive
         // A little after the in-app deadline, so the in-app alert removes it before it shows.
         let trigger = UNTimeIntervalNotificationTrigger(
