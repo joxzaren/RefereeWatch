@@ -8,7 +8,7 @@ ls -d /Applications/Xcode*.app 2>/dev/null || true
 
 candidate=$(ls -d /Applications/Xcode_27*.app 2>/dev/null | sort -V | tail -n 1 || true)
 if [[ -z "$candidate" ]]; then
-  current=$(xcodebuild -version | head -n 1)
+  current=$(xcodebuild -version 2>/dev/null | sed -n 1p || true)
   if [[ "$current" == "Xcode 27"* ]]; then
     echo "Using default $current"
     exit 0
@@ -19,4 +19,5 @@ fi
 
 sudo xcode-select -s "$candidate/Contents/Developer"
 xcodebuild -version
-xcodebuild -showsdks | grep -E "iphonesimulator|watchsimulator"
+sdks=$(xcodebuild -showsdks)
+printf "%s\n" "$sdks" | grep -E "iphonesimulator|watchsimulator" || true
