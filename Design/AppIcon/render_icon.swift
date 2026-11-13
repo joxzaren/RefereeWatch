@@ -1,6 +1,6 @@
 // Draws the RefereeWatch app icon: a flat silver referee whistle in a three
 // quarter view on pitch green, mirrored so the mouthpiece points right and
-// tilted 30 degrees so the mouthpiece points down. Everything is vector paths
+// tilted 30 degrees so the mouthpiece points up. Everything is vector paths
 // in a 1024 by 1024 design space.
 //
 // Run from the repo root:
@@ -48,13 +48,13 @@ let depth = CGVector(dx: 84, dy: -66)
 
 /// Placement of the whistle drawing in the icon. The drawing is mirrored around
 /// its centre so the mouthpiece points right, then turned clockwise by
-/// `tiltDegrees` so the mouthpiece points down, then scaled into the middle.
+/// `tiltDegrees` (negative turns anticlockwise, so the mouthpiece points up), then scaled into the middle.
 let whistleCentre = CGPoint(x: 539, y: 547)
 let mirrored = true
-let tiltDegrees: CGFloat = 30
+let tiltDegrees: CGFloat = -30
 let whistleScale: CGFloat = 1.05
 /// Final nudge, in icon units, so the tilted drawing sits visually centred.
-let placementShift = CGVector(dx: -30, dy: 72)
+let placementShift = CGVector(dx: 52, dy: 28)
 
 // MARK: - Shapes (top-left origin, design units, before mirroring)
 
