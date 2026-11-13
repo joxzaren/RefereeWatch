@@ -2,6 +2,12 @@
 
 Release notes for accepted tickets, newest first.
 
+## REF-2 · Lower the minimum to iOS 26 and watchOS 26
+
+Accepted 2026-11-13.
+
+RefereeWatch now runs on iOS 26 and watchOS 26 or later, so it installs on an iPhone and Apple Watch that are not yet on the newest release. Nothing else changes in how the apps work.
+
 ## REF-1 · Apple Watch app with iPhone companion for football referees
 
 Accepted 2026-11-13.
