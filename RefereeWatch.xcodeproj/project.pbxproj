@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0EB290E7795A10EBF7E5902F /* EventEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003DE28F7AE5F7C655061ED9 /* EventEditorView.swift */; };
 		1128FD9EC042CDFA110FE717 /* ReportPDF.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5538FF0E09B8E206A85152 /* ReportPDF.swift */; };
+		131A14145D885B0AC9A2303E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D355634534EEE0BB74BC4995 /* Assets.xcassets */; };
 		1322DF066F15AD984039CC9F /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 2BEA859F36C14193405132C3 /* PrivacyInfo.xcprivacy */; };
 		1E7A9F4ABBD2F9FF482A6771 /* EventListPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDA55DF898D249AF58ECC99 /* EventListPage.swift */; };
 		1FA16F8AE6BB2901F70B3C51 /* RefereeKit in Frameworks */ = {isa = PBXBuildFile; productRef = FB220FE3323F953D2621A28B /* RefereeKit */; };
@@ -43,6 +44,7 @@
 		B234C24C1AAC827D2E4A7782 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = FC7B47ECD3C7F571A67311F6 /* PrivacyInfo.xcprivacy */; };
 		B9C7A9373EB7833B4BC5EA21 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4306C4029D8FBA556E6CA2 /* Components.swift */; };
 		B9E9DFA05054BA5724B2FF45 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992EBB3807375FF36CA60DC4 /* RootView.swift */; };
+		BEEE56BFE2B0E44E5E9829FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B66772BD4AA42F8A64D864E5 /* Assets.xcassets */; };
 		C3A9AF1616096ADBEFD55B0B /* WatchLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62697F3CCDE7F9E16573CAA /* WatchLogic.swift */; };
 		C6576BD4F545957B043D4548 /* MatchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6CB5A6890981FB162673E64 /* MatchController.swift */; };
 		CD584EAF68401F9CD979C01F /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B829B3B9FC96044EFA3990 /* AppModel.swift */; };
@@ -105,10 +107,12 @@
 		9393BAC4FCD00AF570F4D8CA /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
 		992EBB3807375FF36CA60DC4 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		AC708B752312384E30B578D5 /* SetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupView.swift; sourceTree = "<group>"; };
+		B66772BD4AA42F8A64D864E5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BFC1D2BC24FB917BDB7E8E42 /* WorkoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutManager.swift; sourceTree = "<group>"; };
 		C3DC559528063F429AD0926C /* ClockPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockPage.swift; sourceTree = "<group>"; };
 		CBD764C1FDA96ED10BA6E77D /* ReportLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportLayout.swift; sourceTree = "<group>"; };
 		D2F7146B8C17F0C2FEF3F6AE /* AppModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModelTests.swift; sourceTree = "<group>"; };
+		D355634534EEE0BB74BC4995 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D62697F3CCDE7F9E16573CAA /* WatchLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchLogic.swift; sourceTree = "<group>"; };
 		D68932E7E1A7161D61BDCA63 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		D6CB5A6890981FB162673E64 /* MatchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchController.swift; sourceTree = "<group>"; };
@@ -149,6 +153,7 @@
 		0194C9E088C232FEF333A27F /* Watch */ = {
 			isa = PBXGroup;
 			children = (
+				D355634534EEE0BB74BC4995 /* Assets.xcassets */,
 				3434132FCF0F8329D44D4F54 /* Info.plist */,
 				D6CB5A6890981FB162673E64 /* MatchController.swift */,
 				2BEA859F36C14193405132C3 /* PrivacyInfo.xcprivacy */,
@@ -207,6 +212,7 @@
 		8EBA19A922A093F7426C7ED4 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				B66772BD4AA42F8A64D864E5 /* Assets.xcassets */,
 				D68932E7E1A7161D61BDCA63 /* Info.plist */,
 				FC7B47ECD3C7F571A67311F6 /* PrivacyInfo.xcprivacy */,
 				8A6209F8E94B7232D884AA9A /* RefereeWatchApp.swift */,
@@ -414,6 +420,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEEE56BFE2B0E44E5E9829FD /* Assets.xcassets in Resources */,
 				B234C24C1AAC827D2E4A7782 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -422,6 +429,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				131A14145D885B0AC9A2303E /* Assets.xcassets in Resources */,
 				1322DF066F15AD984039CC9F /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

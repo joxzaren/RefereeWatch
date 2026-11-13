@@ -59,3 +59,15 @@ If running the watch scheme fails, build `RefereeWatchWatch` for "Any watchOS De
 ```bash
 xcrun devicectl device install app --device <watch identifier> ~/Library/Developer/Xcode/DerivedData/RefereeWatch-*/Build/Products/Debug-watchos/RefereeWatchWatch.app
 ```
+
+## App icon
+
+The icon is a silver referee whistle on pitch green, the same artwork for the iPhone and the watch. It is drawn in code with Core Graphics paths in `Design/AppIcon/render_icon.swift`, which holds the shapes, colours and sizes.
+
+To change it, edit that file and run from the repo root:
+
+```bash
+swift Design/AppIcon/render_icon.swift
+```
+
+This writes the 1024 by 1024 PNG, without transparency, into `iOS/Assets.xcassets/AppIcon.appiconset` and `Watch/Assets.xcassets/AppIcon.appiconset`, and writes `Design/AppIcon/preview.png` with the icon in the iPhone and watch masks at small sizes. Check the preview before committing.
