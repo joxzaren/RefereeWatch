@@ -525,7 +525,6 @@
 				CODE_SIGN_ENTITLEMENTS = Shared/Watch.entitlements;
 				INFOPLIST_FILE = Watch/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = com.refereewatch.app.watchkitapp;
-				PRODUCT_NAME = "RefereeWatch Watch";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -592,7 +591,6 @@
 				CODE_SIGN_ENTITLEMENTS = Shared/Watch.entitlements;
 				INFOPLIST_FILE = Watch/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = com.refereewatch.app.watchkitapp;
-				PRODUCT_NAME = "RefereeWatch Watch";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;

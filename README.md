@@ -39,8 +39,23 @@ xcodebuild -project RefereeWatch.xcodeproj -scheme RefereeWatch -destination 'pl
 
 ## Running on your devices
 
-1. Open `RefereeWatch.xcodeproj`.
-2. In Signing & Capabilities, choose your team for the `RefereeWatch` and `RefereeWatchWatch` targets. Change the bundle identifiers if `com.refereewatch.app` is taken.
-3. Run the `RefereeWatch` scheme on your iPhone. The watch app installs with it.
-4. On the watch, open the Permissions screen before the first match and allow Health, Location and Notifications.
-5. On an Apple Watch Ultra, set the Action button to RefereeWatch in Settings. A press opens the app, and later presses during a match start and stop stoppages.
+1. Turn on Developer Mode on the iPhone and on the watch (Settings, Privacy & Security, Developer Mode). The watch only shows the option after Xcode has seen it, so connect the iPhone and open Window, Devices and Simulators first.
+2. Open `RefereeWatch.xcodeproj`.
+3. In Signing & Capabilities, choose your team for the `RefereeWatch` and `RefereeWatchWatch` targets. Change the bundle identifiers if `com.refereewatch.app` is taken.
+4. Run the `RefereeWatch` scheme on your iPhone.
+5. Select the `RefereeWatchWatch` scheme, choose your Apple Watch as the destination and press Run. The first time, Signing & Capabilities may ask you to register the watch. This puts the watch in the provisioning profile; without it the watch refuses the app because "its integrity could not be verified". The first install over Wi-Fi can take a few minutes.
+6. On the watch, open the Permissions screen before the first match and allow Health, Location and Notifications.
+7. On an Apple Watch Ultra, set the Action button to RefereeWatch in Settings. A press opens the app, and later presses during a match start and stop stoppages.
+
+### Personal (free) teams
+
+- Apps signed with a personal team stop launching after 7 days. Run both schemes from Xcode again to renew them.
+- Backup alerts arrive at normal priority, because personal teams cannot use the time-sensitive notifications entitlement. A Focus mode can hold them back.
+
+### Installing the watch app without Xcode's Run
+
+If running the watch scheme fails, build `RefereeWatchWatch` for "Any watchOS Device" and install the result with `devicectl`. Find the watch's identifier with `xcrun devicectl list devices`:
+
+```bash
+xcrun devicectl device install app --device <watch identifier> ~/Library/Developer/Xcode/DerivedData/RefereeWatch-*/Build/Products/Debug-watchos/RefereeWatchWatch.app
+```
