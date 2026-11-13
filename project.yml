@@ -58,7 +58,6 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.refereewatch.app.watchkitapp
-        PRODUCT_NAME: RefereeWatch Watch
     info:
       path: Watch/Info.plist
       properties:
