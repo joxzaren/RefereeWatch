@@ -2,6 +2,12 @@
 
 Release notes for accepted tickets, newest first.
 
+## REF-3 · Make the watch scheme run the watch app from Xcode
+
+Accepted 2026-11-13.
+
+The watch app can now be installed and run on an Apple Watch straight from Xcode with the RefereeWatchWatch scheme. The README explains how to set up a watch for this, including what to do with a free personal team. The app works the same and still shows as RefereeWatch on the watch.
+
 ## REF-2 · Lower the minimum to iOS 26 and watchOS 26
 
 Accepted 2026-11-13.
