@@ -91,7 +91,7 @@
 		1711D768A4763DD50C3162B0 /* ReportPDFRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportPDFRenderer.swift; sourceTree = "<group>"; };
 		2405F3E244D57E1759543436 /* NotificationPermissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPermissions.swift; sourceTree = "<group>"; };
 		2866D22E8176D447D7456C7F /* ConnectivityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectivityService.swift; sourceTree = "<group>"; };
-		2BEA859F36C14193405132C3 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		2BEA859F36C14193405132C3 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		3434132FCF0F8329D44D4F54 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		34581BA9533037B96A8029F4 /* ReportRenderingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportRenderingTests.swift; sourceTree = "<group>"; };
 		357C3BB9B4E23C008DFAFFC3 /* HexColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexColor.swift; sourceTree = "<group>"; };
@@ -117,7 +117,7 @@
 		D68932E7E1A7161D61BDCA63 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		D6CB5A6890981FB162673E64 /* MatchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchController.swift; sourceTree = "<group>"; };
 		D7B985D01608D7BB005679BC /* SetupStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupStore.swift; sourceTree = "<group>"; };
-		D7CAE49DBB5C1EA8F10CAEF1 /* RefereeWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RefereeWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7CAE49DBB5C1EA8F10CAEF1 /* RefereeWatch.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = RefereeWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAA8E27CB7FC3876B9989C6D /* PeriodPages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodPages.swift; sourceTree = "<group>"; };
 		DFA6693D3C82BDBEC9440776 /* PreMatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreMatchView.swift; sourceTree = "<group>"; };
 		E2AA281823B06EFDD49509AD /* RefereeKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = RefereeKit; path = Packages/RefereeKit; sourceTree = SOURCE_ROOT; };
@@ -127,7 +127,7 @@
 		F35FA15E417C16C08FF85C05 /* LogEventPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogEventPage.swift; sourceTree = "<group>"; };
 		F4D9E8030886E5E4BCFA06A5 /* RefereeWatchWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefereeWatchWatchApp.swift; sourceTree = "<group>"; };
 		FA5538FF0E09B8E206A85152 /* ReportPDF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportPDF.swift; sourceTree = "<group>"; };
-		FC7B47ECD3C7F571A67311F6 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		FC7B47ECD3C7F571A67311F6 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -378,6 +378,7 @@
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					2B206B5854E8877119AFC532 = {
+						DevelopmentTeam = "";
 						ProvisioningStyle = Automatic;
 					};
 					6250AAE605BD2716826413A7 = {
@@ -385,6 +386,7 @@
 						ProvisioningStyle = Automatic;
 					};
 					F391AC0ADDE930CB1C595B17 = {
+						DevelopmentTeam = "";
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -529,7 +531,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Shared/Watch.entitlements;
-				DEVELOPMENT_TEAM = 2WQFXNJCJ4;
 				INFOPLIST_FILE = Watch/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = com.refereewatch.app.watchkitapp;
 				SDKROOT = watchos;
@@ -544,7 +545,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Shared/iOS.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = 2WQFXNJCJ4;
 				INFOPLIST_FILE = iOS/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = RefereeWatch;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -580,7 +580,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Shared/iOS.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = 2WQFXNJCJ4;
 				INFOPLIST_FILE = iOS/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = RefereeWatch;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -598,7 +597,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Shared/Watch.entitlements;
-				DEVELOPMENT_TEAM = 2WQFXNJCJ4;
 				INFOPLIST_FILE = Watch/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = com.refereewatch.app.watchkitapp;
 				SDKROOT = watchos;
