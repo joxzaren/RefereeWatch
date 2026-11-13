@@ -54,7 +54,10 @@ let mirrored = true
 let tiltDegrees: CGFloat = -30
 let whistleScale: CGFloat = 1.05
 /// Final nudge, in icon units, so the tilted drawing sits visually centred.
-let placementShift = CGVector(dx: 52, dy: 28)
+let placementShift = CGVector(dx: 25, dy: 28)
+
+/// The lanyard ring is left out of the icon at the approver's request (REF-5 brief v4).
+let showRing = false
 
 // MARK: - Shapes (top-left origin, design units, before mirroring)
 
@@ -211,7 +214,7 @@ func renderIcon(size: Int) -> CGImage {
     ctx.rotate(by: tiltDegrees * .pi / 180)
     if mirrored { ctx.scaleBy(x: -1, y: 1) }
     ctx.translateBy(x: -whistleCentre.x, y: -whistleCentre.y)
-    drawRing(ctx)
+    if showRing { drawRing(ctx) }
     drawBody(ctx)
     return ctx.makeImage()!
 }
