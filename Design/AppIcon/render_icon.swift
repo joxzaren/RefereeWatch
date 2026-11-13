@@ -52,9 +52,9 @@ let depth = CGVector(dx: 84, dy: -66)
 let whistleCentre = CGPoint(x: 539, y: 547)
 let mirrored = true
 let tiltDegrees: CGFloat = -30
-let whistleScale: CGFloat = 1.05
+let whistleScale: CGFloat = 1.22
 /// Final nudge, in icon units, so the tilted drawing sits visually centred.
-let placementShift = CGVector(dx: 25, dy: 28)
+let placementShift = CGVector(dx: 29, dy: 33)
 
 /// The lanyard ring is left out of the icon at the approver's request (REF-5 brief v4).
 let showRing = false
