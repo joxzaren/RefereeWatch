@@ -2,6 +2,12 @@
 
 Release notes for accepted tickets, newest first.
 
+## REF-5 · App icon with a referee whistle for the iPhone and watch apps
+
+Accepted 2026-11-13.
+
+RefereeWatch now has its own app icon on the iPhone and the Apple Watch: a flat silver referee whistle on pitch green, with the mouthpiece angled up to the right. It replaces the blank placeholder on the home screen, in Settings and in the watch app grid.
+
 ## REF-4 · Add AGENTS.md with release note and build rules
 
 Accepted 2026-11-13.
