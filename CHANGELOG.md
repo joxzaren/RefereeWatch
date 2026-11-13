@@ -2,6 +2,12 @@
 
 Release notes for accepted tickets, newest first.
 
+## REF-4 · Add AGENTS.md with release note and build rules
+
+Accepted 2026-11-13.
+
+The RefereeWatch repository now has an AGENTS.md with the project's standing rules for release notes and for building and testing, and a CHANGELOG.md. From now on every accepted ticket's release note appears on the Confluence "Release notes" page and in the CHANGELOG.
+
 ## REF-3 · Make the watch scheme run the watch app from Xcode
 
 Accepted 2026-11-13.
